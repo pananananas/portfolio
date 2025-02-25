@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
-
-import { GeistMono } from "geist/font/mono";
 import { type Metadata } from "next";
+import { GeistMono } from "geist/font/mono";
+import { PostHogProvider } from "./_analytics/provider";
 
 export const metadata: Metadata = {
   title: "Eryk Wójcik",
@@ -13,8 +13,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistMono.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={GeistMono.className}>
+      <body>
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
+      </body>
     </html>
   );
 }
