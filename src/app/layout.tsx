@@ -14,7 +14,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={GeistMono.className}>
-      <body>
+      <body className="bg-[#101010]">
         <PostHogProvider>
           {children}
         </PostHogProvider>

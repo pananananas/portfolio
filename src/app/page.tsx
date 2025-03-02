@@ -1,6 +1,7 @@
 "use client";
 import { posthog } from "posthog-js";
 import { Button } from "~/components/ui/button";
+import PixelGridBackground from "~/components/pixel-grid-background";
 
 export default function HomePage() {
   const onClick = () => {
@@ -9,16 +10,18 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-teal-700 to-emerald-900 text-white">
-      <h1 className=" text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-        My <span className="text-teal-300">Portfolio</span>
+    <main className="flex flex-col items-start justify-center bg-[#101010] text-white sm:items-center">
+      <h1 className="px-4 sm:pt-64 pt-48 text-4xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+        My Portfolio
       </h1>
-      <p className="text-2xl font-bold tracking-tight text-white sm:text-[2rem] pt-5">
-        My name is Eryk Wójcik yo.
+      <p className="px-3 sm:pt-10 pt-5 sm:pb-5 text-md font-bold tracking-tight text-white sm:text-[2rem]">
+        I'm <span className="text-teal-300">Eryk</span>, a software engineer.{" "}
+        <br />
       </p>
-      <Button onClick={onClick}>
-        Test
-      </Button>
+      <p className="px-3 sm:text-md text-sm font-bold tracking-tight text-white sm:text-[1.5rem]">
+        At some point, I'll share my work here 👀
+      </p>
+      <PixelGridBackground />
     </main>
   );
 }
