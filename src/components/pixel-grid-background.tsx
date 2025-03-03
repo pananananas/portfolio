@@ -63,7 +63,7 @@ const PixelGridBackground = () => {
     if (!canvas) return
 
     // Set the canvas size with device pixel ratio for higher resolution
-    const dpr = window.devicePixelRatio || 1
+    const dpr = window.devicePixelRatio ?? 1
     canvas.width = dimensions.width * dpr
     canvas.height = dimensions.height * dpr
     
@@ -82,12 +82,12 @@ const PixelGridBackground = () => {
     // Only need to track opacities for the visible half
     const visibleRows = gridSize - startRow
     
-    // Create these arrays only once per effect run
-    const pixelOpacities = new Array(visibleRows * gridSize).fill(0)
-    const pixelColorIndices = new Array(visibleRows * gridSize).fill(-1) // -1 means default color
+    // Create these arrays only once per effect run with proper typing
+    const pixelOpacities = Array.from<number>({ length: visibleRows * gridSize }).fill(0)
+    const pixelColorIndices = Array.from<number>({ length: visibleRows * gridSize }).fill(-1) // -1 means default color
     let frameCount = 0
 
-    const drawPixels = (radius: number) => {
+    const drawPixels = (_radius: number) => {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
       
       // Only render from startRow to gridSize
@@ -98,14 +98,15 @@ const PixelGridBackground = () => {
           // Skip rendering pixels with zero opacity for performance
           if (pixelOpacities[index] === 0) continue;
           
-          const colorIndex = pixelColorIndices[index]
-          if (colorIndex >= 0) {
+          const colorIndex = pixelColorIndices[index] ?? -1
+          if (colorIndex >= 0 && colorIndex < specialColors.length) {
             // Use special color with the same opacity
-            const hexOpacity = Math.round(pixelOpacities[index] * 255).toString(16).padStart(2, '0')
-            ctx.fillStyle = `${specialColors[colorIndex]}${hexOpacity}`
+            const hexOpacity = Math.round((pixelOpacities[index] ?? 0) * 255).toString(16).padStart(2, '0')
+            const color = specialColors[colorIndex] ?? "#5EEAD4"
+            ctx.fillStyle = `${color}${hexOpacity}`
           } else {
             // Use default color with the calculated opacity
-            ctx.fillStyle = `rgba(200, 200, 200, ${pixelOpacities[index]})`
+            ctx.fillStyle = `rgba(200, 200, 200, ${pixelOpacities[index] ?? 0})`
           }
           
           ctx.fillRect(

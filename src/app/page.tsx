@@ -1,13 +1,12 @@
 "use client";
 import { posthog } from "posthog-js";
-import { Button } from "~/components/ui/button";
 import PixelGridBackground from "~/components/pixel-grid-background";
 
 export default function HomePage() {
-  const onClick = () => {
-    console.log("clicked");
-    posthog.capture("Test");
-  };
+  // const onClick = () => {
+  //   console.log("clicked");
+  //   posthog.capture("Test");
+  // };
 
   return (
     <main className="flex flex-col items-start justify-center bg-[#101010] text-white sm:items-center">
@@ -15,11 +14,11 @@ export default function HomePage() {
         My Portfolio
       </h1>
       <p className="px-3 sm:pt-10 pt-5 sm:pb-5 text-md font-bold tracking-tight text-white sm:text-[2rem]">
-        I'm <span className="text-teal-300">Eryk</span>, a software engineer.{" "}
+        I&apos;m <span className="text-teal-300">Eryk</span>, a software engineer.{" "}
         <br />
       </p>
       <p className="px-3 sm:text-md text-sm font-bold tracking-tight text-white sm:text-[1.5rem]">
-        At some point, I'll share my work here 👀
+        At some point, I&apos;ll share my work here 👀
       </p>
       <PixelGridBackground />
     </main>
