@@ -174,7 +174,7 @@ const PixelGridBackground = () => {
   }, [dimensions, renderConstants, specialColors, isInsideCircle, getCircleRadius])
 
   return (
-    <div className="fixed w-full top-[3px] left-0 z-10">
+    <div className=" w-full bottom-[3px] left-0 z-10 rotate-180">
       <canvas
         ref={canvasRef}
         width={dimensions.width}

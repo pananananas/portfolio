@@ -1,26 +1,29 @@
-"use client";
-import { posthog } from "posthog-js";
-import PixelGridBackground from "~/components/pixel-grid-background";
+import Navbar from "~/components/navbar";
+import AboutMe from "~/components/about-me";
+import Projects from "~/components/projects";
+import TechStackV4 from "~/components/tech-stack-v4";
+import Experience from "~/components/experience";
+import ContactForm from "~/components/contact-form";
+import Hobbies from "~/components/hobbies";
+import Footer from "~/components/footer";
+import PixelArt from "~/components/pixel-art";
+import HeroV2 from "~/components/hero-v2";
 
-export default function HomePage() {
-  // const onClick = () => {
-  //   console.log("clicked");
-  //   posthog.capture("Test");
-  // };
-
+export default function Home() {
   return (
-    <main className="flex flex-col items-start justify-center bg-[#101010] text-white sm:items-center">
-      <h1 className="px-4 sm:pt-64 pt-48 text-4xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-        My Portfolio
-      </h1>
-      <p className="px-3 sm:pt-10 pt-5 sm:pb-5 text-md font-bold tracking-tight text-white sm:text-[2rem]">
-        I&apos;m <span className="text-teal-300">Eryk</span>, a software engineer.{" "}
-        <br />
-      </p>
-      <p className="px-3 sm:text-md text-sm font-bold tracking-tight text-white sm:text-[1.5rem]">
-        At some point, I&apos;ll share my work here 👀
-      </p>
-      <PixelGridBackground />
+    <main className="min-h-screen bg-[#101010] font-geist-mono text-white">
+      <Navbar />
+      <div className="container mx-auto px-4 pt-20 md:px-24 xl:px-48">
+        <PixelArt />
+        <HeroV2 />
+        <AboutMe />
+        <Projects />
+        <TechStackV4 />
+        <Experience />
+        <ContactForm />
+        <Hobbies />
+        <Footer />
+      </div>
     </main>
   );
 }
