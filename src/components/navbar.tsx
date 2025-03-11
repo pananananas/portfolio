@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "~/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -69,6 +69,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,27 +96,75 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle clicks outside the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Close the menu if it's open and the click is outside the menu and toggle button
+      if (
+        isOpen &&
+        menuRef.current &&
+        buttonRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    // Add the event listener when the menu is open
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Clean up
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // Custom scroll function with offset
+  const scrollToSection = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (!element) {
+      console.error(`Element with ID ${elementId} not found`);
+      return;
+    }
+    
+    // Calculate scroll position with offset
+    const offsetTop = element.getBoundingClientRect().top;
+    const scrollOffset = 60; // Add offset in pixels (adjust as needed)
+    const offsetPosition = offsetTop + window.pageYOffset - scrollOffset;
+    
+    // Perform smooth scroll
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
+
   const handleNavClick = (href: string) => {
+    // Close the menu first
     setIsOpen(false);
 
-    // Smooth scroll to section
-    const element = document.getElementById(href.substring(1));
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    // Wait for animation to complete before scrolling
+    setTimeout(() => {
+      // Smooth scroll to section with offset
+      const targetId = href.substring(1);
+      scrollToSection(targetId);
+    }, 100); // Matches the duration of the menu closing animation
   };
 
   return (
     <nav className="mb-16 tracking-tight">
-      <div className="fixed left-0 right-0 top-0 flex flex-col justify-center items-center bg-gradient-to-b from-[#101010] from-20 via-[#101010]/85 z-50">
-        <div className="p-4 w-full container mx-auto px-3 md:px-20 xl:px-44">
-          <div className="flex justify-between items-center rounded-md border border-zinc-800 bg-[#101010]/85 py-3 px-4">
+      <div className="from-20 fixed left-0 right-0 top-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-[#101010] via-[#101010]/85">
+        <div className="container mx-auto w-full p-4 px-3 md:px-20 xl:px-44">
+          <div className="flex items-center justify-between rounded-md border border-zinc-800 bg-[#101010]/85 px-4 py-3">
             <a href="#" className="text-xl font-bold text-teal-300">
               ewoj.dev
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-2">
+            <div className="hidden space-x-2 md:flex">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -124,8 +174,10 @@ export default function Navbar() {
                     handleNavClick(item.href);
                   }}
                   className={cn(
-                    "transition-all px-3 py-1.5 rounded-md hover:bg-zinc-800/50 cursor-pointer",
-                    activeSection === item.href.substring(1) ? "text-teal-300" : "text-gray-300",
+                    "cursor-pointer rounded-md px-3 py-1.5 transition-all hover:bg-zinc-800/50",
+                    activeSection === item.href.substring(1)
+                      ? "text-teal-300"
+                      : "text-gray-300",
                   )}
                 >
                   {item.name}
@@ -134,7 +186,11 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Navigation Toggle */}
-            <button className="md:hidden group" onClick={() => setIsOpen(!isOpen)}>
+            <button
+              ref={buttonRef}
+              className="group md:hidden"
+              onClick={() => setIsOpen(!isOpen)}
+            >
               <HamIcon isActive={isOpen} />
             </button>
           </div>
@@ -142,49 +198,60 @@ export default function Navbar() {
           {/* Mobile Navigation Menu */}
           <AnimatePresence>
             {isOpen && (
-              <motion.div 
-                className="md:hidden bg-[#101010]/95 backdrop-blur-sm mt-2 rounded-md border border-zinc-800 overflow-hidden"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ 
-                  duration: 0.3, 
-                  ease: [0.4, 0, 0.2, 1]
-                }}
-              >
-                <motion.div 
-                  className="py-4 flex flex-col space-y-4 px-4"
-                  initial={{ y: -10 }}
-                  animate={{ y: 0 }}
-                  transition={{ 
-                    duration: 0.2,
-                    delay: 0.1
+              <>
+                {/* Optional click overlay - can be uncommented if needed for better touch targets */}
+                {/* <div 
+                  className="fixed inset-0 z-40 md:hidden" 
+                  onClick={() => setIsOpen(false)}
+                /> */}
+                
+                <motion.div
+                  ref={menuRef}
+                  className="mt-2 overflow-hidden rounded-md border border-zinc-800 bg-[#101010]/95 backdrop-blur-sm md:hidden z-50"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                 >
-                  {navItems.map((item, i) => (
-                    <motion.a
-                      key={item.name}
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }}
-                      className={cn(
-                        "text-sm py-2 px-3 rounded-md transition-colors hover:bg-zinc-800/50",
-                        activeSection === item.href.substring(1) ? "text-teal-300" : "text-gray-300",
-                      )}
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ 
-                        duration: 0.2,
-                        delay: 0.1 + (i * 0.05)
-                      }}
-                    >
-                      {item.name}
-                    </motion.a>
-                  ))}
+                  <motion.div
+                    className="flex flex-col space-y-4 px-4 py-4"
+                    initial={{ y: -10 }}
+                    animate={{ y: 0 }}
+                    transition={{
+                      duration: 0.2,
+                      delay: 0.1,
+                    }}
+                  >
+                    {navItems.map((item, i) => (
+                      <motion.a
+                        key={item.name}
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick(item.href);
+                        }}
+                        className={cn(
+                          "rounded-md px-3 py-2 text-sm transition-colors hover:bg-zinc-800/50",
+                          activeSection === item.href.substring(1)
+                            ? "text-teal-300"
+                            : "text-gray-300",
+                        )}
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.2,
+                          delay: 0.1 + i * 0.05,
+                        }}
+                      >
+                        {item.name}
+                      </motion.a>
+                    ))}
+                  </motion.div>
                 </motion.div>
-              </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>

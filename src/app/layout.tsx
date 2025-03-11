@@ -7,15 +7,15 @@ import { PostHogProvider } from "./_analytics/provider";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ewoj.dev"),
   title: {
-    default: "Eryk",
-    template: "Eryk",
+    default: "Eryk Wójcik",
+    template: "Eryk Wójcik",
   },
   description: "Software Developer & AI Enthusiast",
   openGraph: {
-    title: "Eryk",
+    title: "Eryk Wójcik",
     description: "Software Developer & AI Enthusiast",
     url: "https://ewoj.dev",
-    siteName: "Eryk",
+    siteName: "Eryk Wójcik",
     locale: "en_US",
     type: "website",
   },
