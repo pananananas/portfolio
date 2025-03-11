@@ -107,7 +107,7 @@ export default function Navbar() {
   return (
     <nav className="mb-16 tracking-tight">
       <div className="fixed left-0 right-0 top-0 flex flex-col justify-center items-center bg-gradient-to-b from-[#101010] from-20 via-[#101010]/85 z-50">
-        <div className="p-4 w-full container mx-auto px-3 md:px-24 xl:px-48">
+        <div className="p-4 w-full container mx-auto px-3 md:px-20 xl:px-44">
           <div className="flex justify-between items-center rounded-md border border-zinc-800 bg-[#101010]/85 py-3 px-4">
             <a href="#" className="text-xl font-bold text-teal-300">
               ewoj.dev
