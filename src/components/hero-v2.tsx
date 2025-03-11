@@ -47,7 +47,7 @@ export default function HeroV2() {
           </p>
         </div>
         <div className="text-gray-400 text-lg mb-8">
-          <p>Creating innovative solutions at the intersection of AI and web development</p>
+          <p>Building AI models and web applications</p>
         </div>
 
         {/* Action Buttons */}

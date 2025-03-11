@@ -9,22 +9,22 @@ const experiences = [
     role: "Software Developer",
     company: "2REN",
     period: "January 2023 - Present",
-    description: "Working on software development projects with a focus on web applications and AI integration.",
-    skills: ["Web Development", "AI Integration", "Software Architecture"],
+    description: "Working on automation of the storage and production process of a company.",
+    skills: ["Web Development", "Data Science", "System Integration"],
   },
   {
-    role: "AI Research Assistant",
-    company: "WUST Research Lab",
-    period: "September 2022 - December 2022",
-    description: "Assisted in research on diffusion models and their applications in computer vision tasks.",
-    skills: ["PyTorch", "Diffusion Models", "Research"],
+    role: "Power Tool Technician",
+    company: "Hilti Sp. z o.o.",
+    period: "May 2019 - June 2019",
+    description: "I was on an internship and worked on the repair line of power tools.",
+    skills: ["Power Tools", "Production Line", "Quality Control"],
   },
   {
-    role: "Web Development Intern",
-    company: "Tech Startup",
-    period: "June 2022 - August 2022",
-    description: "Developed frontend components and integrated APIs for a web application.",
-    skills: ["React", "API Integration", "UI/UX"],
+    role: "PLC Programmer",
+    company: "ThyssenKrupp AG",
+    period: "March 2019 - April 2019",
+    description: "I was on a student exchange program and worked on a projects with the automation department.",
+    skills: ["Siemens", "PLC Programming", "Automation"],
   },
 ]
 
@@ -41,7 +41,7 @@ export default function Experience() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-3xl font-bold mb-8 border-b border-gray-800 pb-2"
+        className="text-3xl font-bold mb-8 border-b border-zinc-800 pb-2"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -59,9 +59,9 @@ export default function Experience() {
                 key={index}
                 onClick={() => setActiveExperience(index)}
                 className={cn(
-                  "text-left p-4 rounded-lg transition-all",
+                  "relative text-left p-4 rounded-lg transition-all flex items-center",
                   activeExperience === index
-                    ? "bg-[#202020] text-teal-300 border-l-2 border-teal-300"
+                    ? "bg-[#202020] text-teal-300"
                     : "text-gray-400 hover:bg-[#151515] hover:text-gray-300",
                 )}
                 initial={{ opacity: 0, x: -20 }}
@@ -69,8 +69,13 @@ export default function Experience() {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="font-medium">{exp.company}</div>
-                <div className="text-sm opacity-70">{exp.period}</div>
+                {activeExperience === index && (
+                  <span className="absolute left-2 top-2 bottom-2  w-1 bg-teal-300 rounded-full"></span>
+                )}
+                <div className="ml-3">
+                  <div className="font-medium">{exp.company}</div>
+                  <div className="text-sm opacity-70">{exp.period}</div>
+                </div>
               </motion.button>
             ))}
           </div>
@@ -78,7 +83,7 @@ export default function Experience() {
 
         {/* Experience details */}
         <motion.div
-          className="md:col-span-2 bg-[#151515] p-6 rounded-lg border border-gray-800"
+          className="md:col-span-2 bg-[#151515] p-6 rounded-lg border border-zinc-800"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}

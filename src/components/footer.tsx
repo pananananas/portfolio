@@ -30,7 +30,7 @@ export default function Footer() {
 
   return (
     <motion.footer
-      className="mt-16 border-t border-gray-800 pt-12"
+      className="mt-16 border-t border-zinc-800 pt-12"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

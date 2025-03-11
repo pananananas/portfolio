@@ -58,7 +58,7 @@ export default function ContactForm() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-3xl font-bold mb-8 border-b border-gray-800 pb-2"
+        className="text-3xl font-bold mb-8 border-b border-zinc-800 pb-2"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -70,7 +70,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Form */}
         <motion.div
-          className="bg-[#151515] p-6 rounded-lg border border-gray-800"
+          className="bg-[#151515] p-6 rounded-lg border border-zinc-800"
           initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -180,8 +180,8 @@ export default function ContactForm() {
 
         {/* Contact Info */}
         <motion.div
-          className="bg-[#151515] p-6 rounded-lg border border-gray-800 flex flex-col justify-between"
-          initial={{ x: 30, opacity: 0 }}
+          className="bg-[#151515] p-6 rounded-lg border border-zinc-800 flex flex-col justify-between"
+          initial={{ x: 0, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}

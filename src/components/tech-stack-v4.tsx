@@ -1,5 +1,5 @@
-"use client"
-import { motion } from "framer-motion"
+"use client";
+import { motion } from "framer-motion";
 
 const techCategories = [
   {
@@ -8,12 +8,12 @@ const techCategories = [
       "PyTorch",
       "Diffusers",
       "Transformers",
-      "scikit-learn",
+      "Scikit Learn",
       "Weights & Biases",
       "CUDA",
-      "TensorFlow",
       "Hugging Face",
       "OpenCV",
+      "MediaPipe",
       "NumPy",
     ],
   },
@@ -23,24 +23,24 @@ const techCategories = [
       "NextJS",
       "React",
       "Vue",
+      "React Native",
       "TailwindCSS",
       "TypeScript",
       "JavaScript",
       "HTML/CSS",
       "Drizzle",
       "Prisma",
-      "tRPC",
     ],
   },
   {
     name: "Backend & DevOps",
-    tech: ["Python", "Django", "Node.js", "Express", "Docker", "Git", "CI/CD", "PostgreSQL", "MongoDB", "AWS"],
+    tech: ["Python", "Django", "Node.js", "Docker", "Git", "CI/CD", "AWS"],
   },
   {
-    name: "Mobile & Other",
-    tech: ["Ionic", "React Native", "MediaPipe", "ThreeJS", "WebGL", "Figma", "Blender", "Unity"],
+    name: "Other",
+    tech: ["Photoshop", "Blender", "Figma", "ThreeJS", "WebGL"],
   },
-]
+];
 
 export default function TechStackV4() {
   return (
@@ -53,7 +53,7 @@ export default function TechStackV4() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-3xl font-bold mb-8 border-b border-gray-800 pb-2"
+        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -64,20 +64,22 @@ export default function TechStackV4() {
 
       {/* Terminal-inspired Layout with Poimandres-like theme */}
       <motion.div
-        className="bg-[#151515] rounded-lg border border-gray-700 overflow-hidden"
+        className="overflow-hidden rounded-lg border border-gray-700 bg-[#151515]"
         initial={{ y: 20 }}
         whileInView={{ y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
         {/* Terminal Header */}
-        <div className="bg-[#1a1a1a] px-4 py-3 border-b border-gray-700 flex items-center">
-          <div className="flex space-x-2 mr-4">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+        <div className="flex items-center border-b border-gray-700 bg-[#1a1a1a] px-4 py-3">
+          <div className="mr-4 flex space-x-2">
+            <div className="h-3 w-3 rounded-full bg-red-500"></div>
+            <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+            <div className="h-3 w-3 rounded-full bg-green-500"></div>
           </div>
-          <div className="text-gray-400 text-sm font-mono flex-1 text-center">ewoj@dev ~ tech-stack</div>
+          <div className="flex-1 text-center font-mono text-sm text-gray-400">
+            ewoj@dev ~ tech-stack
+          </div>
         </div>
 
         {/* Terminal Content */}
@@ -91,17 +93,21 @@ export default function TechStackV4() {
               transition={{ duration: 0.3, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center mb-2">
+              <div className="mb-2 flex items-center">
                 <span className="text-teal-300">ewoj@dev</span>
-                <span className="text-gray-500 mx-1">:</span>
+                <span className="mx-1 text-gray-500">:</span>
                 <span className="text-blue-300">~</span>
-                <span className="text-gray-500 mx-1">$</span>
-                <span className="text-gray-300 ml-1">echo &ldquo;${category.name}&rdquo;</span>
+                <span className="mx-1 text-gray-500">$</span>
+                <span className="ml-1 text-gray-300">
+                  echo &ldquo;${category.name}&rdquo;
+                </span>
               </div>
 
-              <div className="mb-2 text-teal-300 font-bold">{category.name}</div>
+              <div className="mb-2 font-bold text-teal-300">
+                {category.name}
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 ml-4">
+              <div className="ml-4 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 {category.tech.map((tech, techIndex) => (
                   <motion.div
                     key={techIndex}
@@ -111,18 +117,19 @@ export default function TechStackV4() {
                     className="flex items-center"
                     viewport={{ once: true }}
                   >
-                    <span className="text-teal-300 mr-2">•</span>
+                    <span className="mr-2 text-teal-300">•</span>
                     <span className="text-gray-300">{tech}</span>
                   </motion.div>
                 ))}
               </div>
 
-              {index < techCategories.length - 1 && <div className="border-b border-gray-800 my-4"></div>}
+              {index < techCategories.length - 1 && (
+                <div className="my-4 border-b border-zinc-800"></div>
+              )}
             </motion.div>
           ))}
         </div>
       </motion.div>
     </motion.section>
-  )
+  );
 }
-

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 // Placeholder for analog photography images
 const photos = [
@@ -20,7 +20,7 @@ const photos = [
     alt: "Analog photograph 3",
     caption: "Landscape, black & white",
   },
-]
+];
 
 export default function Hobbies() {
   // Commented out for future use
@@ -44,7 +44,7 @@ export default function Hobbies() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-3xl font-bold mb-8 border-b border-gray-800 pb-2"
+        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -53,9 +53,9 @@ export default function Hobbies() {
         Hobbies
       </motion.h2>
 
-      <div className="max-w-3xl mx-auto">
+      <div className="mx-auto max-w-3xl">
         <motion.h3
-          className="text-xl font-semibold mb-4 text-teal-300"
+          className="mb-4 text-xl font-semibold text-teal-300"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -63,23 +63,20 @@ export default function Hobbies() {
         >
           Analog Photography
         </motion.h3>
-
         <motion.p
-          className="text-gray-300 mb-8"
+          className="mb-8 text-gray-300"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          When I&apos;m not coding, I enjoy capturing moments with my film cameras. There&apos;s something special about
-          the process of analog photography - from choosing the right film to the anticipation of developing the
-          negatives.
+          When I&apos;m not coding, I enjoy capturing moments with one of my
+          analog cameras. I&apos;m a huge retro gear nerd and I appreciate the
+          intentionality that is enforced by taking pictures on film.
         </motion.p>
-
+        Gallery comming soon
         {/* Photo gallery */}
-
       </div>
     </motion.section>
-  )
+  );
 }
-

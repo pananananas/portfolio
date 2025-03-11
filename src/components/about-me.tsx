@@ -14,7 +14,7 @@ export default function AboutMe() {
     >
       <div className="max-w-3xl mx-auto">
         <motion.h2
-          className="text-3xl font-bold mb-8 border-b border-gray-800 pb-2"
+          className="text-3xl font-bold mb-8 border-b border-zinc-800 pb-2"
           initial={{ x: -20 }}
           whileInView={{ x: 0 }}
           transition={{ duration: 0.5 }}
@@ -41,7 +41,7 @@ export default function AboutMe() {
           viewport={{ once: true }}
         >
           With experience in both AI research and practical software development, I focus on creating applications that
-          are not only technically sound but also user-friendly and visually appealing.
+          are not only advanced but also user-friendly and visually appealing.
         </motion.p>
       </div>
     </motion.section>
