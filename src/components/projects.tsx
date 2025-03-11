@@ -12,20 +12,36 @@ import { motion } from "framer-motion";
 
 const mainProjects = [
   {
+    title: "MV Diffusion",
+    description:
+      "I designed and trained a custom diffusion model for consistent 3D-aware image generation.",
+    tech: ["Python", "PyTorch", "Diffusers", "Blender", "CUDA", "wandb"],
+    highlight: true,
+    inProgress: true,
+  },
+  {
     title: "TattooAI",
     description:
-      "I created a tattoo visualization app that helps users preview designs on their body using AI.",
+      "I co-created a tattoo visualization app that helps users preview designs on their body using AI.",
     tech: ["TypeScript", "TailwindCSS", "NextJS", "Drizzle", "Clerk"],
     highlight: true,
     inProgress: true,
   },
   {
-    title: "MV Diffusion",
+    title: "BikeFit",
     description:
-      "I designed and trained a custom diffusion model for consistent 3D-aware image generation.",
-    tech: ["Python", "PyTorch", "Diffusers", "CUDA", "wandb"],
-    highlight: true,
-    inProgress: true,
+      "I co-created award winning mobile app for bike fitting using computer vision and ML.",
+    tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
+    highlight: false,
+    inProgress: false,
+  },
+  {
+    title: "RAG System",
+    description:
+      "I built a Retrieval-Augmented Generation system that enhances LLM responses with relevant context from a knowledge base.",
+    tech: ["PyTorch", "Transformers", "Python"],
+    highlight: false,
+    inProgress: false,
   },
   {
     title: "Upscaler",
@@ -36,26 +52,10 @@ const mainProjects = [
     inProgress: false,
   },
   {
-    title: "BikeFit",
-    description:
-      "I co-created a multiplatform mobile app for bike fitting using computer vision and ML.",
-    tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
-    highlight: false,
-    inProgress: false,
-  },
-  {
     title: "Structure from Motion",
     description:
-      "I implemented a photogrammetry pipeline for 3D reconstruction from a video.",
+      "I implemented a SLAM photogrammetry pipeline for 3D reconstruction from a video.",
     tech: ["Python", "OpenCV", "Open3D"],
-    highlight: false,
-    inProgress: false,
-  },
-  {
-    title: "RAG System",
-    description:
-      "I built a Retrieval-Augmented Generation system that enhances LLM responses with relevant context from a knowledge base.",
-    tech: ["PyTorch", "Transformers", "Python"],
     highlight: false,
     inProgress: false,
   },
@@ -75,13 +75,13 @@ const smallProjects = [
   {
     title: "Animations in JS",
     description:
-      "I took a course on animations in p5js and made some sketches.",
-    tech: ["JavaScript", "p5js"],
+      "I took a course on animations in p5.js and made some sketches like the one on the footer :>",
+    tech: ["JavaScript", "p5.js"],
   },
   {
     title: "Drone Simulator",
     description:
-      "I built a drone flight simulator using bare c++ with no external libraries.",
+      "I built a drone flight simulator using c++ with no external libraries 💀",
     tech: ["C++"],
   },
 ];

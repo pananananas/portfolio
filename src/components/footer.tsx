@@ -63,7 +63,7 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          &copy; {new Date().getFullYear()} Eryk Wójcik. All rights reserved.
+          &copy; {new Date().getFullYear()} Eryk Wójcik {":>"}
         </motion.p>
         <motion.p
           className="mt-2 text-xs text-gray-600"
