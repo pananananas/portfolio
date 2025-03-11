@@ -78,7 +78,7 @@ export default function TechStackV4() {
             <div className="h-3 w-3 rounded-full bg-green-500"></div>
           </div>
           <div className="flex-1 text-center font-mono text-sm text-gray-400">
-            ewoj@dev ~ tech-stack
+            ewoj@dev ~/tech-stack
           </div>
         </div>
 
