@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 const mainProjects = [
   {
-    title: "InkMe",
+    title: "TattooAI",
     description:
       "I created a tattoo visualization app that helps users preview designs on their body using AI.",
     tech: ["TypeScript", "TailwindCSS", "NextJS", "Drizzle", "Clerk"],
