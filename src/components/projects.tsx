@@ -14,7 +14,7 @@ const mainProjects = [
   {
     title: "MV Diffusion",
     description:
-      "I designed and trained a custom diffusion model for consistent 3D-aware image generation.",
+      "I designed and trained a custom adapter for a diffusion model to generate consistent 3D-aware images.",
     tech: ["Python", "PyTorch", "Diffusers", "Blender", "CUDA", "wandb"],
     highlight: true,
     inProgress: true,
