@@ -30,7 +30,7 @@ const mainProjects = [
   {
     title: "BikeFit",
     description:
-      "I co-created award winning mobile app for bike fitting using computer vision and ML.",
+      "I co-created award winning mobile app that utilizes CV and ML to analyze users body and propose adjustments to bike.",
     tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
     highlight: false,
     inProgress: false,
