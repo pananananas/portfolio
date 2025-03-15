@@ -17,7 +17,7 @@ export async function submitContactForm(data: FormValues) {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   // In a real app, you would send an email or store in a database
-  console.log("Form submitted:", data)
+  // console.log("Form submitted:", data)
 
   return { success: true }
 }

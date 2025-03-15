@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { cn } from "~/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import BurgerIcon from "./ui/burger-icon";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -11,59 +12,6 @@ const navItems = [
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
-
-type HamIconProps = {
-  isActive: boolean;
-};
-
-const HamIcon: React.FC<HamIconProps> = ({ isActive }) => {
-  return (
-    <svg
-      className={`h-10 w-10 cursor-pointer ${isActive ? "rotate-45" : ""}`}
-      style={{
-        transition: "transform 400ms",
-      }}
-      viewBox="0 0 100 100"
-    >
-      <path
-        className="stroke-current text-gray-300 transition-colors"
-        d="m 70,33 h -40 c 0,0 -6,1.368796 -6,8.5 0,7.131204 6,8.5013 6,8.5013 l 20,-0.0013"
-        strokeWidth={5.5}
-        fill="none"
-        strokeLinecap="round"
-        style={{
-          transition: "stroke-dasharray 400ms, stroke-dashoffset 400ms",
-          strokeDasharray: isActive ? "17 82" : "40 82",
-          strokeDashoffset: isActive ? "-62px" : "0",
-        }}
-      />
-      <path
-        className="stroke-current text-gray-300 transition-colors"
-        d="m 70,50 h -40"
-        strokeWidth={5.5}
-        fill="none"
-        strokeLinecap="round"
-        style={{
-          transition: "stroke-dasharray 400ms, stroke-dashoffset 400ms",
-          strokeDasharray: isActive ? "40 111" : "40 111",
-          strokeDashoffset: isActive ? "23px" : "0",
-        }}
-      />
-      <path
-        className="stroke-current text-gray-300 transition-colors"
-        d="m 69.575405,67.073826 h -40 c -5.592752,0 -6.873604,-9.348582 1.371031,-9.348582 8.244634,0 19.053564,21.797129 19.053564,12.274756 l 0,-40"
-        strokeWidth={5.5}
-        fill="none"
-        strokeLinecap="round"
-        style={{
-          transition: "stroke-dasharray 400ms, stroke-dashoffset 400ms",
-          strokeDasharray: isActive ? "40 161" : "40 161",
-          strokeDashoffset: isActive ? "-83px" : "0",
-        }}
-      />
-    </svg>
-  );
-};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,22 +26,8 @@ export default function Navbar() {
       // Set navbar background when scrolled
       setIsScrolled(window.scrollY > 20);
 
-      // Show gradient when scrolled halfway down the viewport
       const halfViewport = window.innerHeight / 2;
       const shouldShowGradient = window.scrollY > halfViewport;
-
-      // Only log when state changes to reduce console spam
-      if (shouldShowGradient !== showGradient) {
-        console.log(
-          `Gradient State Change: ${showGradient} → ${shouldShowGradient}`,
-        );
-        console.log(
-          `Scroll position: ${window.scrollY}, Half viewport: ${halfViewport}`,
-        );
-        console.log(
-          `Using opacity transition instead of class toggle for gradient`,
-        );
-      }
 
       setShowGradient(shouldShowGradient);
 
@@ -223,12 +157,12 @@ export default function Navbar() {
               className="group md:hidden"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <HamIcon isActive={isOpen} />
+              <BurgerIcon isActive={isOpen} />
             </button>
           </div>
 
           {/* Mobile Navigation Menu */}
-          <AnimatePresence>
+          <AnimatePresence mode="sync">
             {isOpen && (
               <>
                 {/* Optional click overlay - can be uncommented if needed for better touch targets */}
@@ -240,7 +174,7 @@ export default function Navbar() {
                 <motion.div
                   ref={menuRef}
                   className={cn(
-                    "relative z-50 mt-2 overflow-hidden rounded-md transition-all duration-700 ease-in-out md:hidden",
+                    "relative z-50 mt-2 overflow-hidden rounded-md md:hidden",
                     showGradient
                       ? "border border-zinc-800"
                       : "border border-transparent",
@@ -249,24 +183,14 @@ export default function Navbar() {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{
-                    duration: 0.3,
-                    ease: [0.4, 0, 0.2, 1],
+                    duration: 0.2,
+                    ease: "easeInOut",
                   }}
                 >
                   {/* Background with opacity transition */}
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-md bg-[#101010]/95 backdrop-blur-sm transition-opacity duration-700 ease-in-out"
-                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-md bg-[#101010]/95 backdrop-blur-sm" />
 
-                  <motion.div
-                    className="relative z-10 flex flex-col space-y-4 px-4 py-4"
-                    initial={{ y: -10 }}
-                    animate={{ y: 0 }}
-                    transition={{
-                      duration: 0.2,
-                      delay: 0.1,
-                    }}
-                  >
+                  <div className="relative z-10 flex flex-col px-4 py-4">
                     {navItems.map((item, i) => (
                       <motion.a
                         key={item.name}
@@ -276,7 +200,7 @@ export default function Navbar() {
                           handleNavClick(item.href);
                         }}
                         className={cn(
-                          "rounded-md px-3 py-2 text-sm transition-colors hover:bg-zinc-800/50",
+                          "rounded-md px-3 py-3 text-sm hover:bg-zinc-800/50",
                           activeSection === item.href.substring(1)
                             ? "text-teal-300"
                             : "text-gray-300",
@@ -284,14 +208,14 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
-                          duration: 0.2,
-                          delay: 0.1 + i * 0.05,
+                          duration: 0.15,
+                          delay: 0.05 * i,
                         }}
                       >
                         {item.name}
                       </motion.a>
                     ))}
-                  </motion.div>
+                  </div>
                 </motion.div>
               </>
             )}

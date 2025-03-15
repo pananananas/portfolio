@@ -9,7 +9,7 @@ const experiences = [
     role: "Software Developer",
     company: "2REN",
     period: "January 2023 - Present",
-    description: "Working on automation of the storage and production process of a company.",
+    description: "I created and maintained a full stack web application for storage management which helped clients with keeping tabs on stock remotely and save time spent on communication.",
     skills: ["Web Development", "Data Science", "System Integration"],
   },
   {

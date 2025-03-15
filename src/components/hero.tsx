@@ -62,7 +62,7 @@ export default function HeroV2() {
             className="group border-gray-700 bg-[#151515] hover:bg-[#202020] hover:text-teal-300"
           >
             <FileText className="mr-2 h-4 w-4 group-hover:text-teal-300" />
-            Download CV
+            CV
           </Button>
           <Button
             variant="outline"

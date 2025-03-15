@@ -22,7 +22,7 @@ const mainProjects = [
   {
     title: "TattooAI",
     description:
-      "I co-created a tattoo visualization app that helps users preview designs on their body using AI.",
+      "I made a tattoo visualization app that helps users preview designs on their body using AI.",
     tech: ["TypeScript", "TailwindCSS", "NextJS", "Drizzle", "Clerk"],
     highlight: true,
     inProgress: true,
@@ -30,7 +30,7 @@ const mainProjects = [
   {
     title: "BikeFit",
     description:
-      "I co-created award winning mobile app that utilizes CV and ML to analyze users body and propose adjustments to bike.",
+      "I co-created award winning mobile app that utilizes CV and ML to analyze users body and propose adjustments to their bike.",
     tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
     highlight: false,
     inProgress: false,
@@ -39,7 +39,7 @@ const mainProjects = [
     title: "RAG System",
     description:
       "I built a Retrieval-Augmented Generation system that enhances LLM responses with relevant context from a knowledge base.",
-    tech: ["PyTorch", "Transformers", "Python"],
+    tech: ["Python", "PyTorch", "Transformers"],
     highlight: false,
     inProgress: false,
   },
