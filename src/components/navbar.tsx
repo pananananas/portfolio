@@ -69,6 +69,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showGradient, setShowGradient] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -76,6 +77,25 @@ export default function Navbar() {
     const handleScroll = () => {
       // Set navbar background when scrolled
       setIsScrolled(window.scrollY > 20);
+
+      // Show gradient when scrolled halfway down the viewport
+      const halfViewport = window.innerHeight / 2;
+      const shouldShowGradient = window.scrollY > halfViewport;
+
+      // Only log when state changes to reduce console spam
+      if (shouldShowGradient !== showGradient) {
+        console.log(
+          `Gradient State Change: ${showGradient} → ${shouldShowGradient}`,
+        );
+        console.log(
+          `Scroll position: ${window.scrollY}, Half viewport: ${halfViewport}`,
+        );
+        console.log(
+          `Using opacity transition instead of class toggle for gradient`,
+        );
+      }
+
+      setShowGradient(shouldShowGradient);
 
       // Determine active section
       const sections = navItems.map((item) => item.href.substring(1));
@@ -129,12 +149,12 @@ export default function Navbar() {
       console.error(`Element with ID ${elementId} not found`);
       return;
     }
-    
+
     // Calculate scroll position with offset
     const offsetTop = element.getBoundingClientRect().top;
     const scrollOffset = 60; // Add offset in pixels (adjust as needed)
     const offsetPosition = offsetTop + window.pageYOffset - scrollOffset;
-    
+
     // Perform smooth scroll
     window.scrollTo({
       top: offsetPosition,
@@ -156,9 +176,21 @@ export default function Navbar() {
 
   return (
     <nav className="mb-16 tracking-tight">
-      <div className="from-20 fixed left-0 right-0 top-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-[#101010] via-[#101010]/85">
-        <div className="container mx-auto w-full p-4 px-3 md:px-20 xl:px-44">
-          <div className="flex items-center justify-between rounded-md border border-zinc-800 bg-[#101010]/85 px-4 py-3">
+      <div className="fixed left-0 right-0 top-0 z-50 flex flex-col items-center justify-center">
+        <div
+          className="from-20 pointer-events-none absolute inset-0 bg-gradient-to-b from-[#101010] via-[#101010]/85 transition-opacity duration-700 ease-in-out"
+          style={{ opacity: showGradient ? 1 : 0 }}
+        />
+
+        <div className="container relative z-10 mx-auto w-full p-4 px-3 md:px-20 xl:px-44">
+          <div
+            className={cn(
+              "flex items-center justify-between rounded-md border px-4 py-3 transition-all duration-700 ease-in-out",
+              showGradient
+                ? "border-zinc-800 bg-[#060606]/70"
+                : "border-transparent bg-[#060606]/85",
+            )}
+          >
             <a href="#" className="text-xl font-bold text-teal-300">
               ewoj.dev
             </a>
@@ -204,10 +236,15 @@ export default function Navbar() {
                   className="fixed inset-0 z-40 md:hidden" 
                   onClick={() => setIsOpen(false)}
                 /> */}
-                
+
                 <motion.div
                   ref={menuRef}
-                  className="mt-2 overflow-hidden rounded-md border border-zinc-800 bg-[#101010]/95 backdrop-blur-sm md:hidden z-50"
+                  className={cn(
+                    "relative z-50 mt-2 overflow-hidden rounded-md transition-all duration-700 ease-in-out md:hidden",
+                    showGradient
+                      ? "border border-zinc-800"
+                      : "border border-transparent",
+                  )}
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -216,8 +253,13 @@ export default function Navbar() {
                     ease: [0.4, 0, 0.2, 1],
                   }}
                 >
+                  {/* Background with opacity transition */}
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-md bg-[#101010]/95 backdrop-blur-sm transition-opacity duration-700 ease-in-out"
+                  />
+
                   <motion.div
-                    className="flex flex-col space-y-4 px-4 py-4"
+                    className="relative z-10 flex flex-col space-y-4 px-4 py-4"
                     initial={{ y: -10 }}
                     animate={{ y: 0 }}
                     transition={{

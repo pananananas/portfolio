@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import { useMediaQuery } from "react-responsive"
 
-const PixelGridBackground = () => {
+const PixelGrid = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -187,5 +187,5 @@ const PixelGridBackground = () => {
   )
 }
 
-export default PixelGridBackground;
+export default PixelGrid;
 

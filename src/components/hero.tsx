@@ -40,7 +40,7 @@ export default function HeroV2() {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <section className="relative py-16 text-center">
+    <section className="relative pt-[40vh] text-center">
       <div className="relative z-10">
         <h1 className="mb-6 text-2xl font-bold md:text-7xl">
           <span className="text-white">Eryk Wójcik</span>
@@ -51,11 +51,10 @@ export default function HeroV2() {
             <span className="animate-pulse text-teal-300">|</span>
           </p>
         </div>
-        <div className="mb-8 text-lg text-gray-400">
+        {/* <div className="mb-8 text-lg text-gray-400">
           <p>Building AI models and web applications</p>
-        </div>
+        </div> */}
 
-        {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4">
           <Button
             variant="outline"

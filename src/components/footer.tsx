@@ -2,7 +2,7 @@
 
 import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
-import PixelGridBackground from "./pixel-grid-background";
+import PixelGrid from "./pixel-grid";
 
 export default function Footer() {
   const socialIcons = [
@@ -65,17 +65,8 @@ export default function Footer() {
         >
           &copy; {new Date().getFullYear()} Eryk Wójcik {":>"}
         </motion.p>
-        <motion.p
-          className="mt-2 text-xs text-gray-600"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          viewport={{ once: true }}
-        >
-          Built with love using Next.js and TailwindCSS
-        </motion.p>
       </div>
-      <PixelGridBackground />
+      <PixelGrid />
     </motion.footer>
   );
 }
