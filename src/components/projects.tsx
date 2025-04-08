@@ -14,7 +14,7 @@ const mainProjects = [
   {
     title: "MV Diffusion",
     description:
-      "I designed and trained a custom adapter for a diffusion model to generate consistent 3D-aware images.",
+      "In my Masters Thesis I am working on a custom adapter for diffusion model to fine tune model for consistent 3D-aware image generation, enhancing the generative Image-to-3D pipeline.",
     tech: ["Python", "PyTorch", "Diffusers", "Blender", "CUDA", "wandb"],
     highlight: true,
     inProgress: true,
@@ -22,7 +22,7 @@ const mainProjects = [
   {
     title: "TattooAI",
     description:
-      "I made a tattoo visualization app that helps users preview designs on their body using AI.",
+      "I’m working on a tattoo visualization app that helps users preview designs on their body using various AI methods in realms of Computer Vision including Image-to-3D, Inpainting and VLMs",
     tech: ["TypeScript", "TailwindCSS", "NextJS", "Drizzle", "Clerk"],
     highlight: true,
     inProgress: true,
@@ -46,7 +46,7 @@ const mainProjects = [
   {
     title: "Upscaler",
     description:
-      "I developed a web application for upscaling images using AI models with a modern interface.",
+      "I developed a web application for upscaling images using AI models ESRGAN and DWSR on the backend.",
     tech: ["Vue", "TailwindCSS", "Django", "PyTorch"],
     highlight: false,
     inProgress: false,
@@ -54,8 +54,8 @@ const mainProjects = [
   {
     title: "Structure from Motion",
     description:
-      "I implemented a SLAM photogrammetry pipeline for 3D reconstruction from a video.",
-    tech: ["Python", "OpenCV", "Open3D"],
+      "I built a fundamental 3D reconstruction pipeline from scratch, converting image sequences into camera poses and 3D point clouds.",
+    tech: ["Python", "OpenCV", "NumPy"],
     highlight: false,
     inProgress: false,
   },
@@ -69,7 +69,7 @@ const smallProjects = [
   },
   {
     title: "Art Portfolio",
-    description: "I built a portfolio website to showcase my friend's art.",
+    description: "I built a personal website to showcase art portfolio.",
     tech: ["NextJS", "TailwindCSS", "Drizzle"],
   },
   {

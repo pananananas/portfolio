@@ -38,6 +38,8 @@ const techCategories = [
       "Python",
       "Django",
       "Node.js",
+      "SQL",
+      "Spark",
       "Docker",
       "Git",
       "CI/CD",
@@ -68,7 +70,7 @@ export default function TechStackV4() {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        Tech I Use
+        Tech I worked with
       </motion.h2>
 
       {/* Terminal-inspired Layout with Poimandres-like theme */}
