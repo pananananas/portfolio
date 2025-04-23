@@ -22,8 +22,8 @@ const mainProjects = [
   {
     title: "TattooAI",
     description:
-      "I’m working on a tattoo visualization app that helps users preview designs on their body using various AI methods in realms of Computer Vision including Image-to-3D, Inpainting and VLMs",
-    tech: ["TypeScript", "TailwindCSS", "NextJS", "Drizzle", "Clerk"],
+      "I’m working on a tattoo visualization app that helps users preview designs on their body using various AI methods in realms of Computer Vision including Depth Estimation, Image-to-3D, Inpainting and VLMs",
+    tech: ["React-Native", "TailwindCSS", "Expo", "Convex", "Clerk"],
     highlight: true,
     inProgress: true,
   },

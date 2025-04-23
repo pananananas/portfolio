@@ -31,20 +31,19 @@ export default function AboutMe() {
         >
           I&apos;m a software developer from Wrocław, Poland, currently
           completing my Master&apos;s degree in Artificial Intelligence at
-          Wrocław University of Science and Technology (WUST). 
+          Wrocław University of Science and Technology (WUST).
         </motion.p>
         <motion.p
           className="mb-4 leading-relaxed text-gray-300"
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }} 
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          My passion lies
-          in developing advanced image editing and generation tools. I have
-          hands-on experience with Computer Vision solutions and generative
-          pipelines, creating AI-driven tools that are both powerful and
-          user-friendly.
+          My passion lies in developing advanced image editing and generation
+          tools. I have hands-on experience with Computer Vision solutions and
+          generative pipelines, creating AI-driven tools that are both powerful
+          and user-friendly.
         </motion.p>
         <motion.p
           className="leading-relaxed text-gray-300"
