@@ -56,6 +56,16 @@ const config = {
         teal: {
           "300": "#5EEAD4",
         },
+        holographic: {
+          teal: "#A4FCF5",
+          blue: "#81A9F8",
+          pink: "#F7C8BF",
+          purple: "#CDAFFA",
+          darkTeal: "#3DFFF2",
+          darkBlue: "#4F7DFF",
+          darkPink: "#FF9B8A",
+          darkPurple: "#C87DFF",
+        },
       },
       fontFamily: {
         "geist-mono": ["Geist Mono", "monospace"],

@@ -75,7 +75,7 @@ export default function TechStackV4() {
 
       {/* Terminal-inspired Layout with Poimandres-like theme */}
       <motion.div
-        className="overflow-hidden rounded-lg border border-gray-700 bg-[#151515]"
+        className="overflow-hidden rounded-lg border border-gray-700 bg-[#101010]"
         initial={{ y: 20 }}
         whileInView={{ y: 0 }}
         transition={{ duration: 0.5 }}

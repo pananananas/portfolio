@@ -29,7 +29,6 @@ export default function ContactForm() {
     defaultValues: {
       name: "",
       email: "",
-      subject: "",
       message: "",
     },
   });
@@ -48,7 +47,6 @@ export default function ContactForm() {
       posthog.capture("contact_form_submitted", {
         name: data.name,
         email: data.email,
-        subject: data.subject,
         message: data.message,
       });
 
@@ -84,7 +82,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Contact Form */}
         <motion.div
-          className="rounded-lg border border-zinc-800 bg-[#151515] p-6"
+          className="rounded-lg border border-zinc-800 bg-[#101010] p-6"
           initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -133,24 +131,6 @@ export default function ContactForm() {
 
               <FormField
                 control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-300">Subject</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="What is this regarding?"
-                        className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="message"
                 render={({ field }) => (
                   <FormItem>
@@ -175,18 +155,21 @@ export default function ContactForm() {
                 viewport={{ once: true }}
               >
                 <Button
+                  effect="expandIcon"
+                  icon={Send}
+                  iconPlacement="right"
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-teal-300 text-[#101010] hover:bg-teal-400"
+                  className="bg-teal-300 text-[#070707] hover:bg-teal-400"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
                       Sending...
                     </>
                   ) : (
                     <>
-                      <Send className="mr-2 h-4 w-4" />
+                      {/* <Send className="mr-2 h-4 w-4" /> */}
                       Send Message
                     </>
                   )}
@@ -198,7 +181,7 @@ export default function ContactForm() {
 
         {/* Contact Info */}
         <motion.div
-          className="flex flex-col justify-between rounded-lg border border-zinc-800 bg-[#151515] p-6"
+          className="flex flex-col justify-between rounded-lg border border-zinc-800 bg-[#101010] p-6"
           initial={{ x: 0, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -221,8 +204,7 @@ export default function ContactForm() {
               transition={{ duration: 0.3, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Feel free to reach out if you have any questions. I&apos;m always
-              open to new opportunities and interesting projects.
+              Feel free to reach out! :{">"} <br />
             </motion.p>
 
             <div className="space-y-4 text-gray-300">
@@ -297,11 +279,13 @@ export default function ContactForm() {
             </h4>
             <Button
               variant="outline"
-              className="group w-full border-gray-700 bg-[#202020] hover:bg-[#252525] hover:text-teal-300"
+              className="group w-full border-gray-700 bg-[#202020] text-gray-300 hover:bg-[#252525] hover:text-teal-300"
+              effect="expandIcon"
+              icon={Calendar}
+              iconPlacement="right"
               onClick={() => window.open("https://cal.com/ewojdev", "_blank")}
             >
-              <Calendar className="mr-2 h-4 w-4 group-hover:text-teal-300" />
-              Schedule on Cal.com
+              Schedule a call!
             </Button>
           </motion.div>
         </motion.div>

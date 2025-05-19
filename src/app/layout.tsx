@@ -40,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistMono.className}>
-      <body className="bg-[#101010]">
+      <body className="bg-[#070707]">
         <PostHogProvider>
           {children}
         </PostHogProvider>

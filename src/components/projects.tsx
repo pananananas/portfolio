@@ -9,6 +9,8 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { motion } from "framer-motion";
+import { Button } from "./ui/button";
+import { ArrowRightIcon } from "~/components/ui/arrow-right";
 
 const mainProjects = [
   {
@@ -18,6 +20,7 @@ const mainProjects = [
     tech: ["Python", "PyTorch", "Diffusers", "Blender", "CUDA", "wandb"],
     highlight: true,
     inProgress: true,
+    link: "https://github.com/pananananas/MVD",
   },
   {
     title: "TattooAI",
@@ -34,6 +37,7 @@ const mainProjects = [
     tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
     highlight: false,
     inProgress: false,
+    link: "https://play.google.com/store/apps/details?id=com.bike.fitter.app&hl=pl",
   },
   {
     title: "RAG System",
@@ -42,6 +46,7 @@ const mainProjects = [
     tech: ["Python", "PyTorch", "Transformers"],
     highlight: false,
     inProgress: false,
+    link: "https://github.com/pananananas/NLP",
   },
   {
     title: "Upscaler",
@@ -50,6 +55,7 @@ const mainProjects = [
     tech: ["Vue", "TailwindCSS", "Django", "PyTorch"],
     highlight: false,
     inProgress: false,
+    link: "https://github.com/pananananas/Upscaler",
   },
   {
     title: "Structure from Motion",
@@ -58,6 +64,7 @@ const mainProjects = [
     tech: ["Python", "OpenCV", "NumPy"],
     highlight: false,
     inProgress: false,
+    link: "https://github.com/pananananas/StructFromMotion",
   },
 ];
 
@@ -66,17 +73,20 @@ const smallProjects = [
     title: "Fantasy Map Generator",
     description: "I fine-tuned a diffusion model for fantasy map generation.",
     tech: ["Python", "PyTorch", "Diffusers"],
+    link: "https://github.com/pananananas/FantasyMapGen",
   },
   {
     title: "Art Portfolio",
     description: "I built a personal website to showcase art portfolio.",
     tech: ["NextJS", "TailwindCSS", "Drizzle"],
+    link: "https://haczmarek.vercel.app/",
   },
   {
     title: "Animations in JS",
     description:
       "I took a course on animations in p5.js and made some sketches like the one on the footer :>",
     tech: ["JavaScript", "p5.js"],
+    link: "https://github.com/pananananas/SplinesSim",
   },
   {
     title: "Drone Simulator",
@@ -119,13 +129,19 @@ export default function Projects() {
         {mainProjects.map((project, index) => (
           <motion.div
             key={index}
+            className={project.link ? "cursor-pointer" : ""}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
             viewport={{ once: true }}
+            onClick={() => {
+              if (project.link) window.open(project.link, "_blank");
+            }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
             <Card
-              className={`h-full border-zinc-800 bg-[#151515] transition-all hover:border-gray-700 ${project.highlight ? "ring-1 ring-teal-300/20" : ""}`}
+              className={`h-full border-zinc-800 bg-[#101010] transition-all hover:border-gray-700 ${project.highlight ? "ring-1 ring-teal-300/20" : ""}`}
             >
               <CardHeader className="relative">
                 {project.inProgress && (
@@ -140,7 +156,7 @@ export default function Projects() {
                 >
                   {project.title}
                 </CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="pt-2 text-gray-400">
                   {project.description}
                 </CardDescription>
               </CardHeader>
@@ -190,8 +206,13 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
             viewport={{ once: true }}
+            onClick={() => {
+              if (project.link) window.open(project.link, "_blank");
+            }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
-            <Card className="h-full border-zinc-800 bg-[#151515] transition-all hover:border-gray-700">
+            <Card className="h-full border-zinc-800 bg-[#101010] transition-all hover:border-gray-700">
               <CardHeader className="p-4">
                 <CardTitle className="text-base text-white">
                   {project.title}

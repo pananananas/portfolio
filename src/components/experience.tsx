@@ -8,7 +8,7 @@ const experiences = [
   {
     role: "Software Developer",
     company: "2REN",
-    period: "January 2023 - Present",
+    period: "January 2023 - April 2025",
     description:
       "In a non-technical environment, I served as the sole technical resource, overseeing all IT responsibilities. I’m working on a full-stack inventory management system enabling remote stock monitoring and reducing communication overhead with multilingual clients.",
     skills: ["Web Development", "Data Science", "System Integration"],
@@ -65,7 +65,7 @@ export default function Experience() {
                   "relative flex items-center rounded-lg p-4 text-left transition-all",
                   activeExperience === index
                     ? "bg-[#202020] text-teal-300"
-                    : "text-gray-400 hover:bg-[#151515] hover:text-gray-300",
+                    : "text-gray-400 hover:bg-[#101010] hover:text-gray-300",
                 )}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -86,7 +86,7 @@ export default function Experience() {
 
         {/* Experience details */}
         <motion.div
-          className="rounded-lg border border-zinc-800 bg-[#151515] p-6 md:col-span-2"
+          className="rounded-lg border border-zinc-800 bg-[#101010] p-6 md:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}

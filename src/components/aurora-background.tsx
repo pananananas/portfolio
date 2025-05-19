@@ -281,11 +281,11 @@ export default function AuroraBackground() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#070707] to-transparent" />
       </div>
 
       <div
-        className="absolute left-0 right-0 z-[-2] w-full bg-[#101010]"
+        className="absolute left-0 right-0 z-[-2] w-full bg-[#070707]"
         style={{
           top: containerHeight > 0 ? `${containerHeight}px` : "66vh",
           minHeight: "33vh",

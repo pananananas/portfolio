@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Github, FileText, Calendar } from "lucide-react";
+import { ArrowRightIcon } from "~/components/ui/arrow-right";
 import { Button } from "~/components/ui/button";
-
 const roles = [
   "AI Engineer",
   "Web Developer",
-  "UI/UX Designer",
+  "Data Scientist",
   "Photographer",
 ];
 
@@ -39,6 +39,26 @@ export default function HeroV2() {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, roleIndex]);
 
+  const scrollToSection = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    const offsetTop = element.getBoundingClientRect().top;
+    const scrollOffset = 60;
+    const offsetPosition = offsetTop + window.pageYOffset - scrollOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
+
+  const handleNavClick = (href: string) => {
+    setTimeout(() => {
+      const targetId = href.substring(1);
+      scrollToSection(targetId);
+    }, 100);
+  };
+
   return (
     <section className="relative pt-[40vh] text-center">
       <div className="relative z-10">
@@ -57,32 +77,34 @@ export default function HeroV2() {
 
         <div className="flex flex-wrap justify-center gap-4">
           <Button
-            variant="outline"
+            variant="secondary"
             // onClick={() => window.open("https://drive.google.com/file/d/1-_0000000000000000000000000000000000000000/view?usp=sharing", "_blank")}
-            className="group border-gray-700 bg-[#151515] hover:bg-[#202020] hover:text-teal-300"
+            className="group border-gray-700 bg-[#080808] text-gray-300 hover:bg-[#151515] hover:text-teal-100"
           >
-            <FileText className="mr-2 h-4 w-4 group-hover:text-teal-300" />
+            <FileText className="mr-2 h-4 w-4 group-hover:text-teal-100" />
             CV
           </Button>
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() =>
               window.open("https://github.com/pananananas", "_blank")
             }
-            className="group border-gray-700 bg-[#151515] hover:bg-[#202020] hover:text-teal-300"
+            className="group border-gray-700 bg-[#080808] text-gray-300 hover:bg-[#151515] hover:text-teal-100"
           >
-            <Github className="mr-2 h-4 w-4 group-hover:text-teal-300" />
+            <Github className="mr-2 h-4 w-4 group-hover:text-teal-100" />
             GitHub
           </Button>
           <Button
-            variant="outline"
-            onClick={() =>
-              window.open("https://cal.com/ewojdev/30min", "_blank")
-            }
-            className="group border-gray-700 bg-[#151515] hover:bg-[#202020] hover:text-teal-300"
+            variant="holographicDark"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#contact");
+            }}
           >
-            <Calendar className="mr-2 h-4 w-4 group-hover:text-teal-300" />
-            Schedule a Call
+            <div className="flex items-center gap-2">
+              Contact
+              <ArrowRightIcon className="-rotate-45" />
+            </div>
           </Button>
         </div>
       </div>

@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import BurgerIcon from "./ui/burger-icon";
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Tech", href: "#tech" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
+  { name: "about", href: "#about" },
+  { name: "projects", href: "#projects" },
+  { name: "tech", href: "#tech" },
+  { name: "experience", href: "#experience" },
+  { name: "contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -112,7 +112,7 @@ export default function Navbar() {
     <nav className="mb-16 tracking-tight">
       <div className="fixed left-0 right-0 top-0 z-50 flex flex-col items-center justify-center">
         <div
-          className="from-20 pointer-events-none absolute inset-0 bg-gradient-to-b from-[#101010] via-[#101010]/85 transition-opacity duration-700 ease-in-out"
+          className="from-20 pointer-events-none absolute inset-0 bg-gradient-to-b from-[#070707] via-[#070707]/85 transition-opacity duration-700 ease-in-out"
           style={{ opacity: showGradient ? 1 : 0 }}
         />
 
@@ -121,7 +121,7 @@ export default function Navbar() {
             className={cn(
               "flex items-center justify-between rounded-md border px-4 py-3 transition-all duration-700 ease-in-out",
               showGradient
-                ? "border-zinc-800 bg-[#060606]/70"
+                ? "border-zinc-900 bg-[#060606]/70"
                 : "border-transparent bg-[#060606]/85",
             )}
           >
@@ -142,8 +142,8 @@ export default function Navbar() {
                   className={cn(
                     "cursor-pointer rounded-md px-3 py-1.5 transition-all hover:bg-zinc-800/50",
                     activeSection === item.href.substring(1)
-                      ? "text-teal-300"
-                      : "text-gray-300",
+                      ? "text-teal-200"
+                      : "text-gray-400",
                   )}
                 >
                   {item.name}
@@ -188,7 +188,7 @@ export default function Navbar() {
                   }}
                 >
                   {/* Background with opacity transition */}
-                  <div className="pointer-events-none absolute inset-0 rounded-md bg-[#101010]/95 backdrop-blur-sm" />
+                  <div className="pointer-events-none absolute inset-0 rounded-md bg-[#070707]/95 backdrop-blur-sm" />
 
                   <div className="relative z-10 flex flex-col px-4 py-4">
                     {navItems.map((item, i) => (
