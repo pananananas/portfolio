@@ -1,6 +1,25 @@
-# TODO
+# This is my personal portfolio website
 
-- [ ] Add CV
-- [ ] Make the form work
+
+
+## Tech stack
+
+- 🖥️ Next.js
+- 🎨 Tailwind CSS
+- 📝 TypeScript
+- 🌐 Vercel
+- 🖼️ Shadcn UI
+
+## Features
+
+- 📱 Responsive design
+- 🎥 Smooth animations
+- 📧 Contact form
+- 📅 Cal integration
+- 🖼️ Image gallery
+
+# TODOs
+
 - [ ] Add image gallery
-- [ ] Add blog
+- [ ] Add blog posts
+- [ ] Add project pages and images

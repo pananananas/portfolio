@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "~/components/ui/badge";
+import { motion } from "framer-motion";
 import {
   Card,
   CardDescription,
@@ -8,9 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { motion } from "framer-motion";
-import { Button } from "./ui/button";
-import { ArrowRightIcon } from "~/components/ui/arrow-right";
 
 const mainProjects = [
   {
@@ -37,7 +35,7 @@ const mainProjects = [
     tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
     highlight: false,
     inProgress: false,
-    link: "https://play.google.com/store/apps/details?id=com.bike.fitter.app&hl=pl",
+    link: "https://www.youtube.com/watch?v=lK-Szmm9FS4",
   },
   {
     title: "RAG System",
