@@ -78,7 +78,12 @@ export default function HeroV2() {
         <div className="flex flex-wrap justify-center gap-4">
           <Button
             variant="secondary"
-            // onClick={() => window.open("https://drive.google.com/file/d/1-_0000000000000000000000000000000000000000/view?usp=sharing", "_blank")}
+            onClick={() =>
+              window.open(
+                "https://utfs.io/f/aslkQcPvYvFBYfhvC0TBoVnpHFl3zyAX5C2cUk0fPb7KEIwd",
+                "_blank",
+              )
+            }
             className="group border-gray-700 bg-[#080808] text-gray-300 hover:bg-[#151515] hover:text-teal-100"
           >
             <FileText className="mr-2 h-4 w-4 group-hover:text-teal-100" />
