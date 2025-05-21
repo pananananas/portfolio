@@ -7,7 +7,7 @@ import { cn } from "~/lib/utils";
 const experiences = [
   {
     role: "Software Developer",
-    company: "2REN",
+    company: "2REN Sp. z o.o.",
     period: "January 2023 - April 2025",
     description:
       "In a non-technical environment, I served as the sole technical resource, overseeing all IT responsibilities. I’m working on a full-stack inventory management system enabling remote stock monitoring and reducing communication overhead with multilingual clients.",
