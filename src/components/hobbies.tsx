@@ -1,26 +1,26 @@
 "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { motion } from "framer-motion";
 
 // Placeholder for analog photography images
-const photos = [
-  {
-    src: "/placeholder.svg?height=600&width=400",
-    alt: "Analog photograph 1",
-    caption: "Street scene, 35mm film",
-  },
-  {
-    src: "/placeholder.svg?height=600&width=400",
-    alt: "Analog photograph 2",
-    caption: "Portrait, medium format",
-  },
-  {
-    src: "/placeholder.svg?height=600&width=400",
-    alt: "Analog photograph 3",
-    caption: "Landscape, black & white",
-  },
-];
+// const photos = [
+//   {
+//     src: "/placeholder.svg?height=600&width=400",
+//     alt: "Analog photograph 1",
+//     caption: "Street scene, 35mm film",
+//   },
+//   {
+//     src: "/placeholder.svg?height=600&width=400",
+//     alt: "Analog photograph 2",
+//     caption: "Portrait, medium format",
+//   },
+//   {
+//     src: "/placeholder.svg?height=600&width=400",
+//     alt: "Analog photograph 3",
+//     caption: "Landscape, black & white",
+//   },
+// ];
 
 export default function Hobbies() {
   // Commented out for future use

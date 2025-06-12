@@ -1,64 +1,53 @@
 "use client";
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Calendar, Send, Loader2 } from "lucide-react";
+import { useEffect, useRef, useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { Calendar, Send } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
 import { toast } from "sonner";
-import { formSchema, submitContactForm, type FormValues } from "~/app/actions";
+import { submitContactForm } from "~/app/actions";
 import { motion } from "framer-motion";
 import posthog from "posthog-js";
 
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      effect="expandIcon"
+      icon={Send}
+      iconPlacement="right"
+      type="submit"
+      disabled={pending}
+      className="bg-teal-300 text-[#070707] hover:bg-teal-400"
+    >
+      {pending ? "Sending..." : "Send Message"}
+    </Button>
+  );
+}
+
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const initialState = { message: "", errors: {}, success: false };
+  const [state, formAction] = useActionState(submitContactForm, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  // Initialize the form
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  });
-
-  // Handle form submission
-  async function onSubmit(data: FormValues) {
-    setIsSubmitting(true);
-
-    try {
-      // Call the server action
-      await submitContactForm(data);
-
+  useEffect(() => {
+    if (state.success) {
       toast.success("Message sent!", {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
-      posthog.capture("contact_form_submitted", {
-        name: data.name,
-        email: data.email,
-        message: data.message,
-      });
-
-      form.reset();
-    } catch (_) {
-      toast.error("Something went wrong.", {
-        description: "Your message couldn't be sent. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
+      posthog.capture("contact_form_submitted");
+      formRef.current?.reset();
+    } else if (state.message && state.errors) {
+      if (state.message && !state.success && Object.keys(state.errors).length > 0) {
+         toast.error("Something went wrong", {
+           description: state.message,
+         });
+      }
     }
-  }
+  }, [state]);
 
   return (
     <motion.section
@@ -88,95 +77,74 @@ export default function ContactForm() {
           transition={{ duration: 0.5, delay: 0.1 }}
           viewport={{ once: true }}
         >
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <FormField
-                  control={form.control}
+          <form ref={formRef} action={formAction} className="space-y-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-gray-300">
+                  Name
+                </label>
+                <Input
+                  id="name"
                   name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-300">Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Your name"
-                          className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  placeholder="Your name"
+                  className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                  required
                 />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-300">Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="your.email@example.com"
-                          type="email"
-                          className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {state.errors?.name?.map((error: string) => (
+                  <p className="text-sm font-medium text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
               </div>
 
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-300">Message</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Your message here..."
-                        className="min-h-[120px] border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-gray-300">
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="your.email@example.com"
+                  type="email"
+                  className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                  required
+                />
+                {state.errors?.email?.map((error: string) => (
+                  <p className="text-sm font-medium text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+              </div>
+            </div>
 
-              <motion.div
-                className="flex justify-end"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <Button
-                  effect="expandIcon"
-                  icon={Send}
-                  iconPlacement="right"
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-teal-300 text-[#070707] hover:bg-teal-400"
-                >
-                  {isSubmitting ? (
-                    <>
-                      {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      {/* <Send className="mr-2 h-4 w-4" /> */}
-                      Send Message
-                    </>
-                  )}
-                </Button>
-              </motion.div>
-            </form>
-          </Form>
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-gray-300">
+                Message
+              </label>
+              <Textarea
+                id="message"
+                name="message"
+                placeholder="Your message here..."
+                className="min-h-[120px] border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                required
+              />
+              {state.errors?.message?.map((error: string) => (
+                <p className="text-sm font-medium text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+            </div>
+
+            <motion.div
+              className="flex justify-end"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <SubmitButton />
+            </motion.div>
+          </form>
         </motion.div>
 
         {/* Contact Info */}

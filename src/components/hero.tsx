@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Github, FileText, Calendar } from "lucide-react";
+import { Github, FileText } from "lucide-react";
 import { ArrowRightIcon } from "~/components/ui/arrow-right";
 import { Button } from "~/components/ui/button";
 const roles = [

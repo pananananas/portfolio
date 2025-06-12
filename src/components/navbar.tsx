@@ -16,22 +16,17 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [showGradient, setShowGradient] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Set navbar background when scrolled
-      setIsScrolled(window.scrollY > 20);
-
       const halfViewport = window.innerHeight / 2;
       const shouldShowGradient = window.scrollY > halfViewport;
 
       setShowGradient(shouldShowGradient);
 
-      // Determine active section
       const sections = navItems.map((item) => item.href.substring(1));
 
       for (const section of sections.reverse()) {
@@ -50,10 +45,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle clicks outside the menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Close the menu if it's open and the click is outside the menu and toggle button
       if (
         isOpen &&
         menuRef.current &&
@@ -65,18 +58,15 @@ export default function Navbar() {
       }
     };
 
-    // Add the event listener when the menu is open
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
-    // Clean up
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
-  // Custom scroll function with offset
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (!element) {
@@ -84,12 +74,10 @@ export default function Navbar() {
       return;
     }
 
-    // Calculate scroll position with offset
     const offsetTop = element.getBoundingClientRect().top;
-    const scrollOffset = 60; // Add offset in pixels (adjust as needed)
+    const scrollOffset = 60;
     const offsetPosition = offsetTop + window.pageYOffset - scrollOffset;
 
-    // Perform smooth scroll
     window.scrollTo({
       top: offsetPosition,
       behavior: "smooth",
@@ -97,15 +85,12 @@ export default function Navbar() {
   };
 
   const handleNavClick = (href: string) => {
-    // Close the menu first
     setIsOpen(false);
 
-    // Wait for animation to complete before scrolling
     setTimeout(() => {
-      // Smooth scroll to section with offset
       const targetId = href.substring(1);
       scrollToSection(targetId);
-    }, 100); // Matches the duration of the menu closing animation
+    }, 100);
   };
 
   return (
@@ -129,7 +114,6 @@ export default function Navbar() {
               ewoj.dev
             </a>
 
-            {/* Desktop Navigation */}
             <div className="hidden space-x-2 md:flex">
               {navItems.map((item) => (
                 <a
@@ -151,7 +135,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Mobile Navigation Toggle */}
             <button
               ref={buttonRef}
               className="group md:hidden"
@@ -161,16 +144,9 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Navigation Menu */}
           <AnimatePresence mode="sync">
             {isOpen && (
               <>
-                {/* Optional click overlay - can be uncommented if needed for better touch targets */}
-                {/* <div 
-                  className="fixed inset-0 z-40 md:hidden" 
-                  onClick={() => setIsOpen(false)}
-                /> */}
-
                 <motion.div
                   ref={menuRef}
                   className={cn(
@@ -187,7 +163,6 @@ export default function Navbar() {
                     ease: "easeInOut",
                   }}
                 >
-                  {/* Background with opacity transition */}
                   <div className="pointer-events-none absolute inset-0 rounded-md bg-[#070707]/95 backdrop-blur-sm" />
 
                   <div className="relative z-10 flex flex-col px-4 py-4">

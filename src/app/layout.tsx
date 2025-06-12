@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { PostHogProvider } from "./_analytics/provider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ewoj.dev"),
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
     default: "Eryk Wójcik",
     template: "Eryk Wójcik",
   },
-  description: "Software Developer & AI Enthusiast",
+  description: "Software Developer & AI Engineer",
   openGraph: {
     title: "Eryk Wójcik",
-    description: "Software Developer & AI Enthusiast",
+    description: "Software Developer & AI Engineer",
     url: "https://ewoj.dev",
     siteName: "Eryk Wójcik",
     locale: "en_US",
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body className="bg-[#070707]">
         <PostHogProvider>
           {children}
+          <Toaster />
         </PostHogProvider>
       </body>
     </html>
