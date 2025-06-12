@@ -80,7 +80,7 @@ export default function HeroV2() {
             variant="secondary"
             onClick={() =>
               window.open(
-                "https://utfs.io/f/aslkQcPvYvFBYfhvC0TBoVnpHFl3zyAX5C2cUk0fPb7KEIwd",
+                "https://utfs.io/f/aslkQcPvYvFBcvEd85Ojgd0FnaW4ieXphRm7woxGT8t3EJkf",
                 "_blank",
               )
             }
