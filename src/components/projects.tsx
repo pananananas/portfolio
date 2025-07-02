@@ -14,7 +14,7 @@ const mainProjects = [
   {
     title: "InkVision",
     description:
-      "I built cross-platform mobile app and backend, enabling users to preview tattoos on their own skin.  I worked on training  and productionizing a custom diffusion model for photorealistic results. App is loved by early testers, public launch is coming soon.",
+      "I built cross-platform mobile app and backend, enabling users to preview tattoos on their own skin.  I worked on training  and productionizing a custom diffusion model for photorealistic results.",
     tech: ["React-Native", "TailwindCSS", "Expo", "Convex", "Clerk"],
     highlight: true,
     inProgress: true,
