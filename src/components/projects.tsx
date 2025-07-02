@@ -12,36 +12,39 @@ import {
 
 const mainProjects = [
   {
+    title: "InkVision",
+    description:
+      "I built cross-platform mobile app and backend, enabling users to preview tattoos on their own skin.  I worked on training  and productionizing a custom diffusion model for photorealistic results. App is loved by early testers, public launch is coming soon.",
+    tech: ["React-Native", "TailwindCSS", "Expo", "Convex", "Clerk"],
+    highlight: true,
+    inProgress: true,
+    link: "https://inkvis.vercel.app/",
+    inProgressText: "Launch soon",
+  },
+  {
     title: "MV Diffusion",
     description:
-      "In my Masters Thesis I am working on a custom adapter for diffusion model to fine tune model for consistent 3D-aware image generation, enhancing the generative Image-to-3D pipeline.",
+      "I built a diffusion model for single-image novel view synthesis, delivering 4x faster training and parameter efficiency (20% trainable). Achieved competitive results to SoTa on benchmark datasets.",
     tech: ["Python", "PyTorch", "Diffusers", "Blender", "CUDA", "wandb"],
     highlight: true,
     inProgress: true,
     link: "https://github.com/pananananas/MVD",
-  },
-  {
-    title: "TattooAI",
-    description:
-      "I’m working on a tattoo visualization app that helps users preview designs on their body using various AI methods in realms of Computer Vision including Depth Estimation, Image-to-3D, Inpainting and VLMs",
-    tech: ["React-Native", "TailwindCSS", "Expo", "Convex", "Clerk"],
-    highlight: true,
-    inProgress: true,
+    inProgressText: "In Progress",
   },
   {
     title: "BikeFit",
     description:
-      "I co-created award winning mobile app that utilizes CV and ML to analyze users body and propose adjustments to their bike.",
+      "I designed and built award winning cross-platform application that utilises AI to analyze users body and propose adjustments to bike - streamlining and democratizing bike fitting process.",
     tech: ["Ionic", "Vue", "MediaPipe", "TypeScript", "ThreeJS"],
     highlight: false,
     inProgress: false,
     link: "https://www.youtube.com/watch?v=lK-Szmm9FS4",
   },
   {
-    title: "RAG System",
+    title: "Tattoo RAG",
     description:
-      "I built a Retrieval-Augmented Generation system that enhances LLM responses with relevant context from a knowledge base.",
-    tech: ["Python", "PyTorch", "Transformers"],
+      "I built a Retrieval-Augmented Generation system that retrieves tattoo designs and info associated with them and generates new design inspirations based on users prompt.",
+    tech: ["Python", "PyTorch", "Transformers", "Vector Search"],
     highlight: false,
     inProgress: false,
     link: "https://github.com/pananananas/NLP",
@@ -69,7 +72,7 @@ const mainProjects = [
 const smallProjects = [
   {
     title: "Fantasy Map Generator",
-    description: "I fine-tuned a diffusion model for fantasy map generation.",
+    description: "I trained a diffusion model for fantasy map generation.",
     tech: ["Python", "PyTorch", "Diffusers"],
     link: "https://github.com/pananananas/FantasyMapGen",
   },
@@ -145,7 +148,7 @@ export default function Projects() {
                 {project.inProgress && (
                   <div className="absolute right-4 top-4 flex items-center">
                     <Badge className="border-none bg-orange-500/20 py-1 pr-1 text-orange-400 hover:bg-orange-500/30">
-                      In Progress <RingLoader />
+                      {project.inProgressText} <RingLoader />
                     </Badge>
                   </div>
                 )}

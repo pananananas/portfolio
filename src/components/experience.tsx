@@ -10,7 +10,7 @@ const experiences = [
     company: "2REN Sp. z o.o.",
     period: "January 2023 - April 2025",
     description:
-      "In a non-technical environment, I served as the sole technical resource, overseeing all IT responsibilities. I’m working on a full-stack inventory management system enabling remote stock monitoring and reducing communication overhead with multilingual clients.",
+      "I led all IT operations as the sole technical specialist in a non-technical company, driving digital transformation. I developed a full-stack inventory management system   with AI-driven structured data entry, achieving over 92% accuracy in automated item parsing. Reduced communication overhead and manual data entry, streamlining remote stock tracking for multilingual clients.",
     skills: ["Web Development", "Data Science", "System Integration"],
   },
   {
