@@ -12,11 +12,10 @@
 
 ## Features
 
-- 📱 Responsive design
-- 🎥 Smooth animations
+- 📱 Responsive
+- 🎥 Framer Motion animations
 - 📧 Contact form
 - 📅 Cal integration
-- 🖼️ Image gallery
 
 # TODOs
 
