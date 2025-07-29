@@ -4,13 +4,14 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "~/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import BurgerIcon from "./ui/burger-icon";
+import { ThemeToggle } from "./ui/theme-toggle";
+import { ContactButton } from "./ui/contact-button";
 
 const navItems = [
   { name: "about", href: "#about" },
   { name: "projects", href: "#projects" },
   { name: "tech", href: "#tech" },
   { name: "experience", href: "#experience" },
-  { name: "contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -27,7 +28,10 @@ export default function Navbar() {
 
       setShowGradient(shouldShowGradient);
 
-      const sections = navItems.map((item) => item.href.substring(1));
+      const sections = [
+        ...navItems.map((item) => item.href.substring(1)),
+        "contact",
+      ];
 
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -65,7 +69,7 @@ export default function Navbar() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, []);
 
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
@@ -93,11 +97,19 @@ export default function Navbar() {
     }, 100);
   };
 
+  const handleContactClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsOpen(false);
+    setTimeout(() => {
+      scrollToSection("contact");
+    }, 100);
+  };
+
   return (
     <nav className="mb-16 tracking-tight">
       <div className="fixed left-0 right-0 top-0 z-50 flex flex-col items-center justify-center">
         <div
-          className="from-20 pointer-events-none absolute inset-0 bg-gradient-to-b from-[#070707] via-[#070707]/85 transition-opacity duration-700 ease-in-out"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background from-20% via-background/85 transition-opacity duration-700 ease-in-out"
           style={{ opacity: showGradient ? 1 : 0 }}
         />
 
@@ -106,15 +118,15 @@ export default function Navbar() {
             className={cn(
               "flex items-center justify-between rounded-md border px-4 py-3 transition-all duration-700 ease-in-out",
               showGradient
-                ? "border-zinc-900 bg-[#060606]/70"
-                : "border-transparent bg-[#060606]/85",
+                ? "border-border bg-background/70"
+                : "border-transparent bg-background/85",
             )}
           >
-            <a href="#" className="text-xl font-bold text-teal-300">
+            <a href="#" className="text-xl font-bold text-primary">
               ewoj.dev
             </a>
 
-            <div className="hidden space-x-2 md:flex">
+            <div className="hidden items-center space-x-2 md:flex">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -124,15 +136,17 @@ export default function Navbar() {
                     handleNavClick(item.href);
                   }}
                   className={cn(
-                    "cursor-pointer rounded-md px-3 py-1.5 transition-all hover:bg-zinc-800/50",
+                    "cursor-pointer rounded-md px-3 py-1.5 transition-all hover:bg-accent/10",
                     activeSection === item.href.substring(1)
-                      ? "text-teal-200"
-                      : "text-gray-400",
+                      ? "text-primary"
+                      : "text-muted-foreground",
                   )}
                 >
                   {item.name}
                 </a>
               ))}
+              <ThemeToggle />
+              <ContactButton onClick={handleContactClick} />
             </div>
 
             <button
@@ -152,7 +166,7 @@ export default function Navbar() {
                   className={cn(
                     "relative z-50 mt-2 overflow-hidden rounded-md md:hidden",
                     showGradient
-                      ? "border border-zinc-800"
+                      ? "border border-border"
                       : "border border-transparent",
                   )}
                   initial={{ height: 0, opacity: 0 }}
@@ -163,7 +177,7 @@ export default function Navbar() {
                     ease: "easeInOut",
                   }}
                 >
-                  <div className="pointer-events-none absolute inset-0 rounded-md bg-[#070707]/95 backdrop-blur-sm" />
+                  <div className="pointer-events-none absolute inset-0 rounded-md bg-background/95 backdrop-blur-sm" />
 
                   <div className="relative z-10 flex flex-col px-4 py-4">
                     {navItems.map((item, i) => (
@@ -175,10 +189,10 @@ export default function Navbar() {
                           handleNavClick(item.href);
                         }}
                         className={cn(
-                          "rounded-md px-3 py-3 text-sm hover:bg-zinc-800/50",
+                          "rounded-md px-3 py-3 text-sm hover:bg-accent/10",
                           activeSection === item.href.substring(1)
-                            ? "text-teal-300"
-                            : "text-gray-300",
+                            ? "text-primary"
+                            : "text-foreground",
                         )}
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -190,6 +204,20 @@ export default function Navbar() {
                         {item.name}
                       </motion.a>
                     ))}
+
+                    {/* Contact Button and Theme Toggle Row */}
+                    <motion.div
+                      className="mt-2 flex items-center justify-between border-t border-border pt-2"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.15,
+                        delay: 0.05 * navItems.length,
+                      }}
+                    >
+                      <ThemeToggle />
+                      <ContactButton onClick={handleContactClick} />
+                    </motion.div>
                   </div>
                 </motion.div>
               </>

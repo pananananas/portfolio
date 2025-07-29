@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Github, FileText } from "lucide-react";
-import { ArrowRightIcon } from "~/components/ui/arrow-right";
 import { Button } from "~/components/ui/button";
+import { ContactButton } from "~/components/ui/contact-button";
+
 const roles = [
   "AI Engineer",
   "Web Developer",
@@ -63,54 +64,45 @@ export default function HeroV2() {
     <section className="relative pt-[40vh] text-center">
       <div className="relative z-10">
         <h1 className="mb-6 text-2xl font-bold md:text-7xl">
-          <span className="text-white">Eryk Wójcik</span>
+          <span className="text-foreground">Eryk Wójcik</span>
         </h1>
         <div className="mb-8 h-12 text-xl md:text-3xl">
           <p>
-            <span className="text-teal-300">{displayText}</span>
-            <span className="animate-pulse text-teal-300">|</span>
+            <span className="text-primary">{displayText}</span>
+            <span className="animate-pulse text-primary">|</span>
           </p>
         </div>
-        {/* <div className="mb-8 text-lg text-gray-400">
-          <p>Building AI models and web applications</p>
-        </div> */}
 
         <div className="flex flex-wrap justify-center gap-4">
           <Button
-            variant="secondary"
+            variant="outline"
             onClick={() =>
               window.open(
                 "https://utfs.io/f/aslkQcPvYvFBgLw3t6Z6lRc49btIBhT7mrKoCdHaxWPEqzvQ",
                 "_blank",
               )
             }
-            className="group border-gray-700 bg-[#080808] text-gray-300 hover:bg-[#151515] hover:text-teal-100"
+            className="group border-border bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground"
           >
-            <FileText className="mr-2 h-4 w-4 group-hover:text-teal-100" />
+            <FileText className="mr-2 h-4 w-4" />
             CV
           </Button>
           <Button
-            variant="secondary"
+            variant="outline"
             onClick={() =>
               window.open("https://github.com/pananananas", "_blank")
             }
-            className="group border-gray-700 bg-[#080808] text-gray-300 hover:bg-[#151515] hover:text-teal-100"
+            className="group border-border bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground"
           >
-            <Github className="mr-2 h-4 w-4 group-hover:text-teal-100" />
+            <Github className="mr-2 h-4 w-4" />
             GitHub
           </Button>
-          <Button
-            variant="holographicDark"
+          <ContactButton
             onClick={(e) => {
               e.preventDefault();
               handleNavClick("#contact");
             }}
-          >
-            <div className="flex items-center gap-2">
-              Contact
-              <ArrowRightIcon className="-rotate-45" />
-            </div>
-          </Button>
+          />
         </div>
       </div>
     </section>

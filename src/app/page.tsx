@@ -11,7 +11,7 @@ import AuroraBackground from "~/components/aurora-background";
 
 export default function Home() {
   return (
-    <main className="min-h-screen font-geist-mono text-white">
+    <main className="min-h-screen font-geist-mono text-foreground">
       <AuroraBackground />
       <div className="relative z-20">
         <Navbar />

@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useTheme, useMounted } from "~/lib/theme-context";
 
 export default function AuroraBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
   const [initialHeightSet, setInitialHeightSet] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const mounted = useMounted();
 
   useEffect(() => {
     // Set initial height only once after component mounts
@@ -17,6 +20,34 @@ export default function AuroraBackground() {
       setInitialHeightSet(true);
     }
   }, [initialHeightSet]);
+
+  // Theme-aware colors - use fallback values during SSR to prevent hydration mismatch
+  const themeConfig = useMemo(
+    () => ({
+      isDark: mounted ? resolvedTheme === "dark" : true, // Default to dark during SSR
+      background: mounted
+        ? resolvedTheme === "dark"
+          ? "#001833"
+          : "#e6f3ff"
+        : "#001833",
+      gradientStart: mounted
+        ? resolvedTheme === "dark"
+          ? "#000823"
+          : "#bde4ff"
+        : "#000823",
+      gradientEnd: mounted
+        ? resolvedTheme === "dark"
+          ? "#002b4d"
+          : "#e6f3ff"
+        : "#002b4d",
+      overlayGradient: mounted
+        ? resolvedTheme === "dark"
+          ? "from-[#070707] to-transparent"
+          : "from-background to-transparent"
+        : "from-[#070707] to-transparent",
+    }),
+    [mounted, resolvedTheme],
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,25 +93,41 @@ export default function AuroraBackground() {
 
     window.addEventListener("resize", handleResize);
 
-    // Create stars
-    const stars: {
+    // Create stars for dark mode or clouds for light mode
+    const celestialObjects: {
       x: number;
       y: number;
       size: number;
       opacity: number;
-      twinkleSpeed: number;
+      speed?: number;
+      twinkleSpeed?: number;
     }[] = [];
-    for (let i = 0; i < 200; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * (canvas.height * 0.7), // Keep stars in upper portion
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random(),
-        twinkleSpeed: Math.random() * 0.001 + 0.0003, // Slow twinkle
-      });
+
+    if (themeConfig.isDark) {
+      // Create stars for dark mode
+      for (let i = 0; i < 200; i++) {
+        celestialObjects.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * (canvas.height * 0.7), // Keep stars in upper portion
+          size: Math.random() * 2 + 0.5,
+          opacity: Math.random(),
+          twinkleSpeed: Math.random() * 0.001 + 0.0003, // Slow twinkle
+        });
+      }
+    } else {
+      // Create clouds for light mode
+      for (let i = 0; i < 8; i++) {
+        celestialObjects.push({
+          x: Math.random() * (canvas.width + 200) - 100, // Start some off-screen
+          y: Math.random() * (canvas.height * 0.6) + 20,
+          size: Math.random() * 80 + 40, // Larger for clouds
+          opacity: Math.random() * 0.3 + 0.1, // More transparent
+          speed: Math.random() * 0.2 + 0.1, // Slow horizontal movement
+        });
+      }
     }
 
-    // Improved shooting stars
+    // Improved shooting stars (only for dark mode)
     const shootingStars: {
       x: number;
       y: number;
@@ -93,6 +140,8 @@ export default function AuroraBackground() {
     }[] = [];
 
     const createShootingStar = () => {
+      if (!themeConfig.isDark) return; // No shooting stars in light mode
+
       if (Math.random() > 0.99) {
         // Less frequent shooting stars
         // Start position - anywhere along the top half of the screen
@@ -137,100 +186,156 @@ export default function AuroraBackground() {
       // Apply the scaling for high DPI again
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Draw dark blue background with gradient
+      // Draw background with theme-aware gradient
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, "#000823");
-      gradient.addColorStop(1, "#002b4d");
+      gradient.addColorStop(0, themeConfig.gradientStart);
+      gradient.addColorStop(1, themeConfig.gradientEnd);
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw stars
-      stars.forEach((star) => {
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
+      // Draw celestial objects (stars or clouds)
+      celestialObjects.forEach((obj, index) => {
+        if (themeConfig.isDark) {
+          // Draw stars
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 255, 255, ${obj.opacity})`;
+          ctx.arc(obj.x, obj.y, obj.size, 0, Math.PI * 2);
+          ctx.fill();
 
-        // Slower twinkle effect
-        star.opacity =
-          Math.sin(Date.now() * star.twinkleSpeed + star.x) * 0.5 + 0.5;
+          // Slower twinkle effect
+          obj.opacity =
+            Math.sin(Date.now() * (obj.twinkleSpeed || 0.0005) + obj.x) * 0.5 +
+            0.5;
+        } else {
+          // Draw clouds
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 255, 255, ${obj.opacity})`;
+
+          // Draw fluffy cloud shape
+          const cloudX = obj.x;
+          const cloudY = obj.y;
+          const cloudSize = obj.size;
+
+          // Main cloud body
+          ctx.arc(cloudX, cloudY, cloudSize * 0.6, 0, Math.PI * 2);
+          ctx.arc(
+            cloudX - cloudSize * 0.3,
+            cloudY,
+            cloudSize * 0.4,
+            0,
+            Math.PI * 2,
+          );
+          ctx.arc(
+            cloudX + cloudSize * 0.3,
+            cloudY,
+            cloudSize * 0.4,
+            0,
+            Math.PI * 2,
+          );
+          ctx.arc(
+            cloudX - cloudSize * 0.1,
+            cloudY - cloudSize * 0.3,
+            cloudSize * 0.3,
+            0,
+            Math.PI * 2,
+          );
+          ctx.arc(
+            cloudX + cloudSize * 0.1,
+            cloudY - cloudSize * 0.3,
+            cloudSize * 0.3,
+            0,
+            Math.PI * 2,
+          );
+          ctx.fill();
+
+          // Move cloud slowly to the right
+          obj.x += obj.speed || 0.1;
+
+          // Reset cloud position when it goes off screen
+          if (obj.x > canvas.width + 100) {
+            obj.x = -100;
+            obj.y = Math.random() * (canvas.height * 0.6) + 20;
+          }
+        }
       });
 
-      // Create and update shooting stars
-      createShootingStar();
+      if (themeConfig.isDark) {
+        // Create and update shooting stars (only in dark mode)
+        createShootingStar();
 
-      // Draw shooting stars
-      shootingStars.forEach((star, index) => {
-        // Update trail
-        star.trail.unshift({ x: star.x, y: star.y, opacity: 1 });
+        // Draw shooting stars
+        shootingStars.forEach((star, index) => {
+          // Update trail
+          star.trail.unshift({ x: star.x, y: star.y, opacity: 1 });
 
-        // Limit trail length
-        if (star.trail.length > 20) {
-          star.trail.pop();
-        }
+          // Limit trail length
+          if (star.trail.length > 20) {
+            star.trail.pop();
+          }
 
-        // Draw trail
-        star.trail.forEach((point, i) => {
-          // Calculate opacity based on position in trail
-          const opacity =
-            (1 - i / star.trail.length) * (star.life / star.maxLife);
+          // Draw trail
+          star.trail.forEach((point, i) => {
+            // Calculate opacity based on position in trail
+            const opacity =
+              (1 - i / star.trail.length) * (star.life / star.maxLife);
 
-          // Draw trail segment
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-          ctx.lineWidth = star.size * (1 - i / star.trail.length); // Trail gets thinner
+            // Draw trail segment
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = star.size * (1 - i / star.trail.length); // Trail gets thinner
 
-          if (i < star.trail.length - 1) {
-            // Fix for linter error - ensure next point exists
-            const nextPoint = star.trail[i + 1];
-            if (nextPoint) {
-              ctx.moveTo(point.x, point.y);
-              ctx.lineTo(nextPoint.x, nextPoint.y);
-              ctx.stroke();
+            if (i < star.trail.length - 1) {
+              // Fix for linter error - ensure next point exists
+              const nextPoint = star.trail[i + 1];
+              if (nextPoint) {
+                ctx.moveTo(point.x, point.y);
+                ctx.lineTo(nextPoint.x, nextPoint.y);
+                ctx.stroke();
+              }
             }
+          });
+
+          // Draw the star head (brighter)
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.life / star.maxLife})`;
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Add a glow effect
+          ctx.beginPath();
+          const glow = ctx.createRadialGradient(
+            star.x,
+            star.y,
+            0,
+            star.x,
+            star.y,
+            star.size * 4,
+          );
+          glow.addColorStop(
+            0,
+            `rgba(255, 255, 255, ${(star.life / star.maxLife) * 0.5})`,
+          );
+          glow.addColorStop(1, `rgba(255, 255, 255, 0)`);
+          ctx.fillStyle = glow;
+          ctx.arc(star.x, star.y, star.size * 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Move shooting star
+          star.x += star.vx;
+          star.y += star.vy;
+          star.life -= 1;
+
+          // Remove if off screen or end of life
+          if (
+            star.x < 0 ||
+            star.x > canvas.width ||
+            star.y > canvas.height ||
+            star.life <= 0
+          ) {
+            shootingStars.splice(index, 1);
           }
         });
-
-        // Draw the star head (brighter)
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.life / star.maxLife})`;
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Add a glow effect
-        ctx.beginPath();
-        const glow = ctx.createRadialGradient(
-          star.x,
-          star.y,
-          0,
-          star.x,
-          star.y,
-          star.size * 4,
-        );
-        glow.addColorStop(
-          0,
-          `rgba(255, 255, 255, ${(star.life / star.maxLife) * 0.5})`,
-        );
-        glow.addColorStop(1, "rgba(255, 255, 255, 0)");
-        ctx.fillStyle = glow;
-        ctx.arc(star.x, star.y, star.size * 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Move shooting star
-        star.x += star.vx;
-        star.y += star.vy;
-        star.life -= 1;
-
-        // Remove if off screen or end of life
-        if (
-          star.x < 0 ||
-          star.x > canvas.width ||
-          star.y > canvas.height ||
-          star.life <= 0
-        ) {
-          shootingStars.splice(index, 1);
-        }
-      });
+      }
 
       requestAnimationFrame(animate);
     };
@@ -240,15 +345,16 @@ export default function AuroraBackground() {
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
     };
-  }, [containerHeight]);
+  }, [containerHeight, themeConfig]);
 
   return (
     <>
       <div
         ref={containerRef}
-        className="absolute left-0 right-0 top-0 z-[-1] w-full overflow-hidden bg-[#001833]"
+        className="absolute left-0 right-0 top-0 z-[-1] w-full overflow-hidden"
         style={{
           height: containerHeight > 0 ? `${containerHeight}px` : "66vh",
+          backgroundColor: themeConfig.background,
         }}
       >
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
@@ -277,15 +383,20 @@ export default function AuroraBackground() {
               src="/me.svg"
               alt="Shadow silhouette"
               className="absolute inset-0 h-full w-full object-contain"
+              style={{
+                filter: themeConfig.isDark ? "none" : "brightness(0.3)",
+              }}
             />
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#070707] to-transparent" />
+        <div
+          className={`absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t ${themeConfig.overlayGradient}`}
+        />
       </div>
 
       <div
-        className="absolute left-0 right-0 z-[-2] w-full bg-[#070707]"
+        className="absolute left-0 right-0 z-[-2] w-full bg-background"
         style={{
           top: containerHeight > 0 ? `${containerHeight}px` : "66vh",
           minHeight: "33vh",
@@ -294,8 +405,12 @@ export default function AuroraBackground() {
       <style jsx>{`
         .aurora-container {
           filter: blur(40px);
-          opacity: 0.8;
-          mix-blend-mode: screen;
+          opacity: ${themeConfig.isDark
+            ? 0.8
+            : 0.3}; /* More subtle for light mode */
+          mix-blend-mode: ${themeConfig.isDark
+            ? "screen"
+            : "soft-light"}; /* Different blend mode for light */
         }
 
         .aurora {
@@ -314,9 +429,11 @@ export default function AuroraBackground() {
         .aurora-1 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 209, 0) 0%,
-            rgba(0, 255, 209, 0.5) 50%,
-            rgba(0, 255, 209, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 209" : "255, 200, 150"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 209" : "255, 200, 150"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 209" : "255, 200, 150"}, 0)
+              100%
           );
           left: 10%;
           width: 150px;
@@ -327,9 +444,11 @@ export default function AuroraBackground() {
         .aurora-2 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 179, 0) 0%,
-            rgba(0, 255, 179, 0.5) 50%,
-            rgba(0, 255, 179, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 179" : "255, 220, 170"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 179" : "255, 220, 170"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 179" : "255, 220, 170"}, 0)
+              100%
           );
           left: 25%;
           width: 120px;
@@ -340,9 +459,11 @@ export default function AuroraBackground() {
         .aurora-3 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 149, 0) 0%,
-            rgba(0, 255, 149, 0.5) 50%,
-            rgba(0, 255, 149, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 149" : "250, 210, 160"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 149" : "250, 210, 160"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 149" : "250, 210, 160"}, 0)
+              100%
           );
           left: 40%;
           width: 180px;
@@ -353,9 +474,11 @@ export default function AuroraBackground() {
         .aurora-4 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 119, 0) 0%,
-            rgba(0, 255, 119, 0.5) 50%,
-            rgba(0, 255, 119, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 119" : "245, 200, 140"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 119" : "245, 200, 140"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 119" : "245, 200, 140"}, 0)
+              100%
           );
           left: 55%;
           width: 140px;
@@ -366,9 +489,10 @@ export default function AuroraBackground() {
         .aurora-5 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 89, 0) 0%,
-            rgba(0, 255, 89, 0.5) 50%,
-            rgba(0, 255, 89, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 89" : "255, 180, 120"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 89" : "255, 180, 120"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 89" : "255, 180, 120"}, 0) 100%
           );
           left: 70%;
           width: 160px;
@@ -379,9 +503,10 @@ export default function AuroraBackground() {
         .aurora-6 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 59, 0) 0%,
-            rgba(0, 255, 59, 0.5) 50%,
-            rgba(0, 255, 59, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 59" : "240, 170, 110"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 59" : "240, 170, 110"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 59" : "240, 170, 110"}, 0) 100%
           );
           left: 85%;
           width: 130px;
@@ -392,9 +517,11 @@ export default function AuroraBackground() {
         .aurora-7 {
           background: linear-gradient(
             180deg,
-            rgba(0, 200, 255, 0) 0%,
-            rgba(0, 200, 255, 0.5) 50%,
-            rgba(0, 200, 255, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 200, 255" : "255, 190, 130"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 200, 255" : "255, 190, 130"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 200, 255" : "255, 190, 130"}, 0)
+              100%
           );
           left: 20%;
           width: 140px;
@@ -405,9 +532,11 @@ export default function AuroraBackground() {
         .aurora-8 {
           background: linear-gradient(
             180deg,
-            rgba(0, 150, 255, 0) 0%,
-            rgba(0, 150, 255, 0.5) 50%,
-            rgba(0, 150, 255, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 150, 255" : "250, 180, 120"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 150, 255" : "250, 180, 120"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 150, 255" : "250, 180, 120"}, 0)
+              100%
           );
           left: 60%;
           width: 170px;
@@ -418,9 +547,11 @@ export default function AuroraBackground() {
         .aurora-9 {
           background: linear-gradient(
             180deg,
-            rgba(0, 180, 255, 0) 0%,
-            rgba(0, 180, 255, 0.4) 50%,
-            rgba(0, 180, 255, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 180, 255" : "255, 210, 140"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 180, 255" : "255, 210, 140"}, 0.3)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 180, 255" : "255, 210, 140"}, 0)
+              100%
           );
           left: 15%;
           width: 145px;
@@ -431,9 +562,11 @@ export default function AuroraBackground() {
         .aurora-10 {
           background: linear-gradient(
             180deg,
-            rgba(0, 220, 255, 0) 0%,
-            rgba(0, 220, 255, 0.6) 50%,
-            rgba(0, 220, 255, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 220, 255" : "245, 200, 150"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 220, 255" : "245, 200, 150"}, 0.5)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 220, 255" : "245, 200, 150"}, 0)
+              100%
           );
           left: 45%;
           width: 155px;
@@ -444,9 +577,11 @@ export default function AuroraBackground() {
         .aurora-11 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 230, 0) 0%,
-            rgba(0, 255, 230, 0.5) 50%,
-            rgba(0, 255, 230, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 230" : "240, 190, 130"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 230" : "240, 190, 130"}, 0.4)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 230" : "240, 190, 130"}, 0)
+              100%
           );
           left: 75%;
           width: 165px;
@@ -457,9 +592,11 @@ export default function AuroraBackground() {
         .aurora-12 {
           background: linear-gradient(
             180deg,
-            rgba(0, 255, 170, 0) 0%,
-            rgba(0, 255, 170, 0.7) 50%,
-            rgba(0, 255, 170, 0) 100%
+            rgba(${themeConfig.isDark ? "0, 255, 170" : "255, 200, 140"}, 0) 0%,
+            rgba(${themeConfig.isDark ? "0, 255, 170" : "255, 200, 140"}, 0.6)
+              50%,
+            rgba(${themeConfig.isDark ? "0, 255, 170" : "255, 200, 140"}, 0)
+              100%
           );
           left: 35%;
           width: 175px;

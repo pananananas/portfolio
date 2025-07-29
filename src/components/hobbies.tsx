@@ -44,7 +44,7 @@ export default function Hobbies() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
+        className="mb-8 border-b border-border pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -55,7 +55,7 @@ export default function Hobbies() {
 
       <div className="mx-auto max-w-3xl">
         <motion.h3
-          className="mb-4 text-xl font-semibold text-teal-300"
+          className="mb-4 text-xl font-semibold text-primary"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -64,7 +64,7 @@ export default function Hobbies() {
           Analog Photography
         </motion.h3>
         <motion.p
-          className="mb-8 text-gray-300"
+          className="mb-8 text-muted-foreground"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}

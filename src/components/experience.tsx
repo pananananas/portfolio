@@ -44,7 +44,7 @@ export default function Experience() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
+        className="mb-8 border-b border-border pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -64,8 +64,8 @@ export default function Experience() {
                 className={cn(
                   "relative flex items-center rounded-lg p-4 text-left transition-all",
                   activeExperience === index
-                    ? "bg-[#202020] text-teal-300"
-                    : "text-gray-400 hover:bg-[#101010] hover:text-gray-300",
+                    ? "bg-muted text-primary"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
                 )}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -73,7 +73,7 @@ export default function Experience() {
                 viewport={{ once: true }}
               >
                 {activeExperience === index && (
-                  <span className="absolute bottom-2 left-2 top-2 w-1 rounded-full bg-teal-300"></span>
+                  <span className="absolute bottom-2 left-2 top-2 w-1 rounded-full bg-primary"></span>
                 )}
                 <div className="ml-3">
                   <div className="font-medium">{exp.company}</div>
@@ -86,7 +86,7 @@ export default function Experience() {
 
         {/* Experience details */}
         <motion.div
-          className="rounded-lg border border-zinc-800 bg-[#101010] p-6 md:col-span-2"
+          className="rounded-lg border border-border bg-card p-6 md:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -99,7 +99,7 @@ export default function Experience() {
             transition={{ duration: 0.3 }}
           >
             <motion.h3
-              className="text-xl font-semibold text-white"
+              className="text-xl font-semibold text-card-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -107,7 +107,7 @@ export default function Experience() {
               {experiences[activeExperience]?.role}
             </motion.h3>
             <motion.p
-              className="mb-4 text-teal-300"
+              className="mb-4 text-primary"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
@@ -115,7 +115,7 @@ export default function Experience() {
               {experiences[activeExperience]?.company}
             </motion.p>
             <motion.p
-              className="mb-6 text-gray-300"
+              className="mb-6 text-muted-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
@@ -126,7 +126,7 @@ export default function Experience() {
               {experiences[activeExperience]?.skills.map((skill, index) => (
                 <motion.span
                   key={index}
-                  className="rounded-full bg-[#202020] px-3 py-1 text-sm text-gray-300"
+                  className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.2, delay: 0.3 + index * 0.1 }}

@@ -21,7 +21,7 @@ const mainProjects = [
     link: "https://inkvis.vercel.app/",
     inProgressText: "Launch soon",
   },
-  {
+  {    
     title: "MV Diffusion",
     description:
       "I built a diffusion model for single-image novel view synthesis, delivering 4x faster training and parameter efficiency (20% trainable). Achieved competitive results to SoTa on benchmark datasets.",
@@ -116,7 +116,7 @@ export default function Projects() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
+        className="mb-8 border-b border-border pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -142,7 +142,7 @@ export default function Projects() {
             whileTap={{ scale: 0.99 }}
           >
             <Card
-              className={`h-full border-zinc-800 bg-[#101010] transition-all hover:border-gray-700 ${project.highlight ? "ring-1 ring-teal-300/20" : ""}`}
+              className={`h-full border-border bg-card transition-all hover:border-muted-foreground ${project.highlight ? "ring-1 ring-primary/20" : ""}`}
             >
               <CardHeader className="relative">
                 {project.inProgress && (
@@ -153,11 +153,11 @@ export default function Projects() {
                   </div>
                 )}
                 <CardTitle
-                  className={project.highlight ? "text-teal-300" : "text-white"}
+                  className={project.highlight ? "text-primary" : "text-card-foreground"}
                 >
                   {project.title}
                 </CardTitle>
-                <CardDescription className="pt-2 text-gray-400">
+                <CardDescription className="pt-2 text-muted-foreground">
                   {project.description}
                 </CardDescription>
               </CardHeader>
@@ -176,7 +176,7 @@ export default function Projects() {
                     >
                       <Badge
                         variant="outline"
-                        className="bg-[#202020] text-gray-300 hover:bg-[#252525]"
+                        className="bg-muted text-muted-foreground hover:bg-muted/80"
                       >
                         {tech}
                       </Badge>
@@ -191,7 +191,7 @@ export default function Projects() {
 
       {/* Small Projects */}
       <motion.h3
-        className="mb-4 text-xl font-semibold text-teal-300"
+        className="mb-4 text-xl font-semibold text-primary"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -213,12 +213,12 @@ export default function Projects() {
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
           >
-            <Card className="h-full border-zinc-800 bg-[#101010] transition-all hover:border-gray-700">
+            <Card className="h-full border-border bg-card transition-all hover:border-muted-foreground">
               <CardHeader className="p-4">
-                <CardTitle className="text-base text-white">
+                <CardTitle className="text-base text-card-foreground">
                   {project.title}
                 </CardTitle>
-                <CardDescription className="text-xs text-gray-400">
+                <CardDescription className="text-xs text-muted-foreground">
                   {project.description}
                 </CardDescription>
               </CardHeader>
@@ -237,7 +237,7 @@ export default function Projects() {
                     >
                       <Badge
                         variant="outline"
-                        className="bg-[#202020] px-2 py-0 text-xs text-gray-300 hover:bg-[#252525]"
+                        className="bg-muted px-2 py-0 text-xs text-muted-foreground hover:bg-muted/80"
                       >
                         {tech}
                       </Badge>

@@ -14,7 +14,7 @@ export default function AboutMe() {
     >
       <div className="mx-auto max-w-3xl">
         <motion.h2
-          className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
+          className="mb-8 border-b border-border pb-2 text-3xl font-bold"
           initial={{ x: -20 }}
           whileInView={{ x: 0 }}
           transition={{ duration: 0.5 }}
@@ -23,7 +23,7 @@ export default function AboutMe() {
           About Me
         </motion.h2>
         <motion.p
-          className="mb-4 leading-relaxed text-gray-300"
+          className="mb-4 leading-relaxed text-muted-foreground"
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -34,7 +34,7 @@ export default function AboutMe() {
           of Science and Technology (WUST).
         </motion.p>
         <motion.p
-          className="mb-4 leading-relaxed text-gray-300"
+          className="mb-4 leading-relaxed text-muted-foreground"
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -45,7 +45,7 @@ export default function AboutMe() {
           models into intuitive, user-friendly interfaces.
         </motion.p>
         <motion.p
-          className="leading-relaxed text-gray-300"
+          className="leading-relaxed text-muted-foreground"
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}

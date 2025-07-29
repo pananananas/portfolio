@@ -53,8 +53,18 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Light mode orange colors
+        orange: {
+          300: "#ecb47a", // Secondary
+          400: "#f49d43", // Accent
+          500: "#d38b40", // Primary
+          600: "#b8713a",
+        },
+        // Theme-aware teal (for dark mode primarily)
         teal: {
-          "300": "#5EEAD4",
+          300: "#5EEAD4", // Original teal for dark mode
+          400: "#2DD4BF",
+          500: "#14B8A6",
         },
         holographic: {
           teal: "#A4FCF5",
@@ -84,10 +94,15 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "gradient-flow": {
+          "0%": { "background-position": "200% 50%" },
+          "100%": { "background-position": "-200% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gradient-flow": "gradient-flow 3s ease-in-out infinite",
       },
     },
   },

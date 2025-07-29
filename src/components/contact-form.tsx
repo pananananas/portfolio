@@ -21,7 +21,7 @@ function SubmitButton() {
       iconPlacement="right"
       type="submit"
       disabled={pending}
-      className="bg-teal-300 text-[#070707] hover:bg-teal-400"
+      className="bg-primary text-primary-foreground hover:bg-primary/90"
     >
       {pending ? "Sending..." : "Send Message"}
     </Button>
@@ -59,7 +59,7 @@ export default function ContactForm() {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="mb-8 border-b border-zinc-800 pb-2 text-3xl font-bold"
+        className="mb-8 border-b border-border pb-2 text-3xl font-bold"
         initial={{ x: -20 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -71,7 +71,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Contact Form */}
         <motion.div
-          className="rounded-lg border border-zinc-800 bg-[#101010] p-6"
+          className="rounded-lg border border-border bg-card p-6"
           initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -80,14 +80,14 @@ export default function ContactForm() {
           <form ref={formRef} action={formAction} className="space-y-6">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-gray-300">
+                <label htmlFor="name" className="text-foreground">
                   Name
                 </label>
                 <Input
                   id="name"
                   name="name"
                   placeholder="Your name"
-                  className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                  className="border-border bg-background text-foreground focus:border-primary/50"
                   required
                 />
                 {state.errors?.name?.map((error: string) => (
@@ -98,7 +98,7 @@ export default function ContactForm() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-gray-300">
+                <label htmlFor="email" className="text-foreground">
                   Email
                 </label>
                 <Input
@@ -106,7 +106,7 @@ export default function ContactForm() {
                   name="email"
                   placeholder="your.email@example.com"
                   type="email"
-                  className="border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                  className="border-border bg-background text-foreground focus:border-primary/50"
                   required
                 />
                 {state.errors?.email?.map((error: string) => (
@@ -118,14 +118,14 @@ export default function ContactForm() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="message" className="text-gray-300">
+              <label htmlFor="message" className="text-foreground">
                 Message
               </label>
               <Textarea
                 id="message"
                 name="message"
                 placeholder="Your message here..."
-                className="min-h-[120px] border-gray-700 bg-[#202020] text-gray-200 focus:border-teal-300/50"
+                className="min-h-[120px] border-border bg-background text-foreground focus:border-primary/50"
                 required
               />
               {state.errors?.message?.map((error: string) => (
@@ -149,7 +149,7 @@ export default function ContactForm() {
 
         {/* Contact Info */}
         <motion.div
-          className="flex flex-col justify-between rounded-lg border border-zinc-800 bg-[#101010] p-6"
+          className="flex flex-col justify-between rounded-lg border border-border bg-card p-6"
           initial={{ x: 0, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -157,7 +157,7 @@ export default function ContactForm() {
         >
           <div>
             <motion.h3
-              className="mb-4 text-xl font-semibold text-teal-300"
+              className="mb-4 text-xl font-semibold text-primary"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.3 }}
@@ -166,7 +166,7 @@ export default function ContactForm() {
               Contact Information
             </motion.h3>
             <motion.p
-              className="mb-6 text-gray-300"
+              className="mb-6 text-foreground"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.4 }}
@@ -175,7 +175,7 @@ export default function ContactForm() {
               Feel free to reach out! :{">"} <br />
             </motion.p>
 
-            <div className="space-y-4 text-gray-300">
+            <div className="space-y-4 text-foreground">
               <motion.div
                 className="flex items-center"
                 initial={{ opacity: 0, x: -10 }}
@@ -183,10 +183,10 @@ export default function ContactForm() {
                 transition={{ duration: 0.3, delay: 0.5 }}
                 viewport={{ once: true }}
               >
-                <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#202020]">
+                <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-muted">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-teal-300"
+                    className="h-4 w-4 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -208,10 +208,10 @@ export default function ContactForm() {
                 transition={{ duration: 0.3, delay: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#202020]">
+                <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-muted">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-teal-300"
+                    className="h-4 w-4 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -242,12 +242,12 @@ export default function ContactForm() {
             transition={{ duration: 0.3, delay: 0.7 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-4 text-lg font-medium text-gray-300">
+            <h4 className="mb-4 text-lg font-medium text-foreground">
               Prefer to schedule a call?
             </h4>
             <Button
               variant="outline"
-              className="group w-full border-gray-700 bg-[#202020] text-gray-300 hover:bg-[#252525] hover:text-teal-300"
+              className="group w-full border-border bg-muted text-muted-foreground hover:bg-muted/80 hover:text-primary"
               effect="expandIcon"
               icon={Calendar}
               iconPlacement="right"

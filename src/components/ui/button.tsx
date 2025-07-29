@@ -18,9 +18,9 @@ const buttonVariants = cva(
         gradient:
           "bg-[linear-gradient(45deg,var(--gradient-lime),var(--gradient-ocean),var(--gradient-wine),var(--gradient-rust))] animate-gradient-flow text-white",
         holographic:
-          "relative text-black bg-white overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.7)] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_0%_0%,theme(colors.holographic.teal)_0%,transparent_50%)] after:absolute after:inset-0 after:-z-10 after:bg-[radial-gradient(circle_at_100%_0%,theme(colors.holographic.blue)_0%,transparent_50%)] [&>span]:absolute [&>span]:inset-0 [&>span:-z-10] [&>span:nth-child(1)]:bg-[radial-gradient(circle_at_0%_100%,theme(colors.holographic.pink)_0%,transparent_50%)] [&>span:nth-child(2)]:bg-[radial-gradient(circle_at_100%_100%,theme(colors.holographic.purple)_0%,transparent_50%)]",
+          "relative text-black bg-white overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.7)] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_0%_0%,theme(colors.holographic.teal)_0%,transparent_50%)] after:absolute after:inset-0 after:-z-10 after:bg-[radial-gradient(circle_at_100%_0%,theme(colors.holographic.blue)_0%,transparent_50%)] [&>span]:absolute [&>span]:inset-0 [&>span:-z-10] [&>span:nth-child(1)]:bg-[radial-gradient(circle_at_0%_100%,theme(colors.holographic.pink)_0%,transparent_50%)] [&>span:nth-child(2)]:bg-[radial-gradient(circle_at_100%_100%,theme(colors.holographic.purple)_0%,transparent_50%)] rounded-xl",
         holographicDark:
-          "relative text-white bg-gray-900/80 overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.15)] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_0%_0%,theme(colors.holographic.darkTeal)_0%,transparent_70%)] after:absolute after:inset-0 after:-z-10 after:bg-[radial-gradient(circle_at_100%_0%,theme(colors.holographic.darkBlue)_0%,transparent_70%)] [&>span]:absolute [&>span]:inset-0 [&>span:-z-10] [&>span:nth-child(1)]:bg-[radial-gradient(circle_at_0%_100%,theme(colors.holographic.darkPink)_0%,transparent_70%)] [&>span:nth-child(2)]:bg-[radial-gradient(circle_at_100%_100%,theme(colors.holographic.darkPurple)_0%,transparent_70%)]",
+          "relative text-white bg-gray-900/80 overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.15)] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_0%_0%,theme(colors.holographic.darkTeal)_0%,transparent_70%)] after:absolute after:inset-0 after:-z-10 after:bg-[radial-gradient(circle_at_100%_0%,theme(colors.holographic.darkBlue)_0%,transparent_70%)] [&>span]:absolute [&>span]:inset-0 [&>span:-z-10] [&>span:nth-child(1)]:bg-[radial-gradient(circle_at_0%_100%,theme(colors.holographic.darkPink)_0%,transparent_70%)] [&>span:nth-child(2)]:bg-[radial-gradient(circle_at_100%_100%,theme(colors.holographic.darkPurple)_0%,transparent_70%)] rounded-xl",
       },
       effect: {
         expandIcon: "group gap-0 relative",
@@ -92,9 +92,9 @@ const Button = React.forwardRef<
   ) => {
     const Comp = asChild ? Slot : "button";
 
-    // Add extra spans for the holographic variant to hold the bottom gradients
+    // Add extra spans for the holographic variants to hold the bottom gradients
     const holographicSpans =
-      variant === "holographic" ? (
+      variant === "holographic" || variant === "holographicDark" ? (
         <>
           <span></span>
           <span></span>

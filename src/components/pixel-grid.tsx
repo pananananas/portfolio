@@ -2,37 +2,48 @@
 
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "~/lib/theme-context";
 
 const PixelGrid = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" });
+  const { resolvedTheme } = useTheme();
 
-  // Base canvas size that will be scaled based on screen size
   const baseCanvasSize = 300;
   const canvasSize = useMemo(
     () => (isLargeScreen ? baseCanvasSize * 1.5 : baseCanvasSize),
     [isLargeScreen],
   );
 
-  // Memoize pixel rendering constants to prevent unnecessary recalculations
   const renderConstants = useMemo(() => {
-    // Adjust pixel size based on screen size
     const basePixelSize = 4;
     const pixelSize = isLargeScreen ? basePixelSize * 2 : basePixelSize;
     const gap = isLargeScreen ? 4 : 3;
 
-    // Keep grid size consistent regardless of screen size
     const gridSize = 100;
-    // Only render the bottom half of the grid
     const startRow = Math.floor(gridSize / 2);
 
     return { pixelSize, gap, gridSize, startRow };
   }, [isLargeScreen]);
 
-  // Special colors for random pixels - memoize to prevent recreation
-  const specialColors = useMemo(() => ["#5EEAD4", "#d1875c", "#c379ea"], []);
+  // Theme-aware colors
+  const themeColors = useMemo(() => {
+    const isDark = resolvedTheme === "dark";
+    
+    return {
+      // Special colors based on theme
+      specialColors: isDark 
+        ? ["#5EEAD4", "#2DD4BF", "#14B8A6"] // Teal shades for dark mode
+        : ["#f49d43", "#ecb47a", "#d38b40"], // Pastel orange shades for light mode
+      // Default pixel color
+      defaultColor: isDark 
+        ? "rgba(255, 255, 255, 0.8)" // Light pixels in dark mode
+        : "rgba(0, 0, 0, 0.3)", // Subtle dark pixels in light mode
+    };
+  }, [resolvedTheme]);
+
   const specialColorChance = 0.001;
 
   // Animation speed control (higher = faster)
@@ -118,16 +129,17 @@ const PixelGrid = () => {
           if (pixelOpacities[index] === 0) continue;
 
           const colorIndex = pixelColorIndices[index] ?? -1;
-          if (colorIndex >= 0 && colorIndex < specialColors.length) {
+          if (colorIndex >= 0 && colorIndex < themeColors.specialColors.length) {
             // Use special color with the same opacity
             const hexOpacity = Math.round((pixelOpacities[index] ?? 0) * 255)
               .toString(16)
               .padStart(2, "0");
-            const color = specialColors[colorIndex] ?? "#5EEAD4";
+            const color = themeColors.specialColors[colorIndex] ?? themeColors.specialColors[0];
             ctx.fillStyle = `${color}${hexOpacity}`;
           } else {
             // Use default color with the calculated opacity
-            ctx.fillStyle = `rgba(200, 200, 200, ${pixelOpacities[index] ?? 0})`;
+            const opacity = pixelOpacities[index] ?? 0;
+            ctx.fillStyle = themeColors.defaultColor.replace(/[\d.]+\)$/, `${opacity})`);
           }
 
           ctx.fillRect(
@@ -162,7 +174,7 @@ const PixelGrid = () => {
           if (Math.random() < specialColorChance) {
             // Randomly select one of the special colors
             pixelColorIndices[index] = Math.floor(
-              Math.random() * specialColors.length,
+              Math.random() * themeColors.specialColors.length,
             );
           } else {
             pixelColorIndices[index] = -1; // Default color
@@ -199,7 +211,7 @@ const PixelGrid = () => {
   }, [
     dimensions,
     renderConstants,
-    specialColors,
+    themeColors,
     isInsideCircle,
     getCircleRadius,
   ]);

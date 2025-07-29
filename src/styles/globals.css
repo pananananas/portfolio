@@ -4,65 +4,91 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Light mode - warm orange color scheme */
+    --background: 34 54% 97%; /* #fcf9f5 */
+    --foreground: 0 0% 15%; /* Darker for better readability */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 34 54% 95%; /* Slightly darker than background for cards */
+    --card-foreground: 0 0% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 34 54% 95%;
+    --popover-foreground: 0 0% 15%;
 
-    --primary: 170 75% 62%;
+    /* Orange accent colors - pastel versions */
+    --primary: 31 63% 54%; /* #d38b40 */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 31 75% 70%; /* #ecb47a */
+    --secondary-foreground: 0 0% 25%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 34 54% 92%; /* Slightly darker than background */
+    --muted-foreground: 0 0% 35%; /* Darker for better readability */
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 31 89% 61%; /* #f49d43 */
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 34 30% 85%; /* Subtle warm border */
+    --input: 34 30% 85%; /* Subtle warm input */
+    --ring: 31 63% 54%; /* Primary color ring */
 
     --radius: 0.5rem;
+
+    /* Custom theme variables */
+    --theme-bg: 34 54% 97%; /* Main background */
+    --theme-bg-secondary: 34 54% 95%; /* Secondary background */
+    --theme-bg-tertiary: 34 54% 92%; /* Card backgrounds */
+    --theme-text: 0 0% 15%; /* Main text */
+    --theme-text-secondary: 0 0% 25%; /* Secondary text */
+    --theme-text-muted: 0 0% 35%; /* Muted text */
+    --theme-border: 34 30% 85%; /* Borders */
+    --theme-accent: 31 63% 54%; /* Orange accent */
+    --theme-accent-foreground: 0 0% 98%;
   }
 
   .dark {
-    --background: 0 0% 6.3%;
+    /* Dark mode - restore original teal colors */
+    --background: 0 0% 4.3%; /* Dark #070707 equivalent */
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 8.3%;
+    --card: 0 0% 6%; /* Slightly lighter than background */
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 8.3%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 170 75% 62%;
+    /* Teal accent colors for dark mode (restored) */
+    --primary: 170 75% 62%; /* Original teal */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 12%; /* Dark secondary */
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 0 0% 12%; /* Dark muted */
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 170 75% 62%; /* Teal accent */
+    --accent-foreground: 0 0% 5%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 0 0% 15%; /* Dark border */
+    --input: 0 0% 15%; /* Dark input */
+    --ring: 170 75% 62%; /* Teal ring */
+
+    /* Custom theme variables for dark mode */
+    --theme-bg: 0 0% 4.3%; /* #070707 equivalent */
+    --theme-bg-secondary: 0 0% 6%; /* Slightly lighter */
+    --theme-bg-tertiary: 0 0% 10%; /* Card backgrounds */
+    --theme-text: 0 0% 98%; /* Main text */
+    --theme-text-secondary: 0 0% 85%; /* Secondary text */
+    --theme-text-muted: 0 0% 65%; /* Muted text */
+    --theme-border: 0 0% 15%; /* Borders */
+    --theme-accent: 170 75% 62%; /* Teal accent */
+    --theme-accent-foreground: 0 0% 5%;
   }
 }
 
@@ -72,6 +98,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -94,6 +121,13 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
 /* Custom animations for RingLoader */

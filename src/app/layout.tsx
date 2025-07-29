@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { PostHogProvider } from "./_analytics/provider";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "~/lib/theme-context";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ewoj.dev"),
@@ -40,12 +41,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistMono.className}>
-      <body className="bg-[#070707]">
-        <PostHogProvider>
-          {children}
-          <Toaster />
-        </PostHogProvider>
+    <html lang="en" className={GeistMono.className} suppressHydrationWarning>
+      <body className="bg-background text-foreground transition-colors">
+        <ThemeProvider>
+          <PostHogProvider>
+            {children}
+            <Toaster />
+          </PostHogProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
