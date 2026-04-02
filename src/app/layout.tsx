@@ -45,6 +45,10 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
           <Toaster />
+          <meta
+            name="yosa-project"
+            content="d255474bd9429c4a6a3c759285ca1da3"
+          />
         </PostHogProvider>
       </body>
     </html>
