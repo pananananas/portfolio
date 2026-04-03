@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistMono.className}>
       <head>
-        <meta name="yosa-project" content="d255474bd9429c4a6a3c759285ca1da3" />
+        <meta name="yosa-project" content="650518edde5d7198899cc0d55374c024" />
       </head>
       <body className="bg-[#070707]">
         <PostHogProvider>
